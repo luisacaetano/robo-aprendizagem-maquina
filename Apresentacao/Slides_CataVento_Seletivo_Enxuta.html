@@ -228,7 +228,11 @@
   .deck .capa .lede { font-size: 1.12rem; }
   .capa svg.arv { transition: opacity .35s ease; }
   .capa svg.arv.trocando { opacity: 0 !important; }
-  @media print { .capa svg.arv.trocando { opacity: 1 !important; } }
+  @media print {
+    .capa svg.arv.trocando { opacity: 1 !important; }
+    /* sombra desfocada vira bloco solido em leitores de PDF: no papel, so a borda */
+    .card.no-verde { box-shadow: none; border-color: rgba(94,230,168,.6); }
+  }
   .metricas { display: flex; flex-wrap: wrap; gap: 10px; }
   .metricas .tag { padding: 6px 13px; }
   /* escala unica de tipografia: um tamanho por funcao, em todas as laminas */
