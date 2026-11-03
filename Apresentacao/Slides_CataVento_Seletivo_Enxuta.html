@@ -1,0 +1,725 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cata-vento Seletivo — Proposta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+  :root {
+    --bg:     #08120E;
+    --deep:   #12261D;
+    --panel:  #0E1D17;
+    --panel2: #122419;
+    --line:   #1C3229;
+    --line2:  #284A3C;
+    --ink:    #E6F2EC;
+    --dim:    #8BA89A;
+    --dimmer: #5A7568;
+    --mint:   #5EE6A8;
+    --amb:    #F2B84B;
+    --red:    #F0626B;
+    --glow:   drop-shadow(0 0 6px rgba(94,230,168,.65));
+    --slide-w: 1280px;
+    --slide-h: 720px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #050B08; color: var(--ink); font-family: "Schibsted Grotesk", ui-sans-serif, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+
+  .deck { display: flex; flex-direction: column; align-items: center; gap: 26px; padding: 68px 16px 60px; }
+  .slide {
+    position: relative; width: var(--slide-w); height: var(--slide-h); max-width: 100%;
+    background: radial-gradient(85% 110% at 82% 18%, var(--deep) 0%, var(--bg) 62%);
+    border: 1px solid var(--line); border-radius: 6px; overflow: hidden;
+    padding: 54px 68px 84px; display: flex; flex-direction: column;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .slide > * { position: relative; }
+
+  /* ---------- tipografia ---------- */
+  .secao { font-family: "IBM Plex Mono", monospace; font-size: .8rem; color: var(--dimmer); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+  .secao::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--mint); filter: var(--glow); }
+  .secao b { color: var(--mint); font-weight: 500; }
+  h1 { font-size: 5.3rem; font-weight: 800; line-height: .96; letter-spacing: -.04em; margin: 0; }
+  h2 { font-size: 2.5rem; font-weight: 800; line-height: 1.04; letter-spacing: -.03em; margin: 0; }
+  h3 { font-size: 1.08rem; font-weight: 700; letter-spacing: -.01em; margin: 0; }
+  p { margin: 0; }
+  .lede { font-size: 1.12rem; color: var(--dim); line-height: 1.55; max-width: 92ch; margin-top: 12px; }
+  .lede b, .card p b, .nota b { color: var(--ink); font-weight: 600; }
+  .mono, code { font-family: "IBM Plex Mono", monospace; }
+  code { font-size: .84em; color: var(--ink); background: rgba(94,230,168,.07); border: 1px solid var(--line2); border-radius: 4px; padding: .08em .38em; }
+  .up { color: var(--mint); } .down { color: var(--red); } .amb { color: var(--amb); }
+
+  /* ---------- blocos ---------- */
+  .cols { display: grid; gap: 22px; margin-top: 26px; align-content: start; }
+  .c2 { grid-template-columns: 1fr 1fr; }
+  .c3 { grid-template-columns: repeat(3, 1fr); }
+  .c-larga { grid-template-columns: 1.3fr .7fr; }
+  .card { background: linear-gradient(180deg, var(--panel2), var(--panel)); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; display: flex; flex-direction: column; gap: 9px; }
+  .card .k { font-family: "IBM Plex Mono", monospace; font-size: .74rem; color: var(--dimmer); }
+  .card p { font-size: .93rem; color: var(--dim); line-height: 1.5; }
+  .card.no-verde { border-color: rgba(94,230,168,.45); box-shadow: inset 0 0 0 1px rgba(94,230,168,.08), 0 0 28px -10px rgba(94,230,168,.45); }
+  .card.no-amb { border-color: rgba(242,184,75,.45); }
+  .card.no-red { border-color: rgba(240,98,107,.4); }
+  .ponto { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: 1px; }
+  .ponto.v { background: var(--mint); filter: var(--glow); } .ponto.a { background: var(--amb); } .ponto.r { background: var(--red); }
+
+  .nota { margin-top: 22px; border-radius: 12px; padding: 13px 18px; font-size: .92rem; color: var(--dim); line-height: 1.5; background: rgba(94,230,168,.06); border: 1px solid rgba(94,230,168,.22); }
+  .nota.alerta { background: rgba(240,98,107,.06); border-color: rgba(240,98,107,.28); }
+
+  table { width: 100%; border-collapse: collapse; }
+  td, th { padding: 8px 12px 8px 0; border-bottom: 1px solid var(--line); vertical-align: top; font-size: .9rem; text-align: left; }
+  tr:last-child td { border-bottom: 0; }
+  th { font-family: "IBM Plex Mono", monospace; font-size: .72rem; color: var(--dimmer); font-weight: 400; }
+  td.campo { color: var(--ink); font-weight: 600; white-space: nowrap; }
+  td.val { font-family: "IBM Plex Mono", monospace; font-size: .84rem; color: var(--amb); white-space: nowrap; }
+  td.desc { color: var(--dim); line-height: 1.45; }
+  td.num { font-family: "IBM Plex Mono", monospace; text-align: right; white-space: nowrap; }
+  .apertada td, .apertada th { padding: 6px 12px 6px 0; }
+  .tag { display: inline-block; font-family: "IBM Plex Mono", monospace; font-size: .74rem; padding: 2px 9px; border-radius: 99px; border: 1px solid var(--line2); color: var(--dim); }
+  .tag.ok { border-color: rgba(94,230,168,.5); color: var(--mint); }
+  .tag.no { border-color: rgba(240,98,107,.5); color: var(--red); }
+
+  .formula { font-family: "IBM Plex Mono", monospace; font-size: .92rem; color: var(--ink); background: rgba(0,0,0,.28); border: 1px solid var(--line2); border-radius: 10px; padding: 12px 16px; line-height: 1.7; }
+  .formula .c { color: var(--dimmer); }
+  .card .ref, .nota .ref { font-family: "IBM Plex Mono", monospace; font-size: .72rem; color: var(--amb); }
+  .codigo { font-family: "IBM Plex Mono", monospace; font-size: .8rem; color: var(--ink); background: rgba(0,0,0,.28); border: 1px solid var(--line2); border-radius: 10px; padding: 12px 14px; line-height: 1.75; white-space: pre; margin: 0; }
+  .codigo .c { color: var(--dimmer); }
+
+  .nums { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 20px; }
+  .nums > div { background: linear-gradient(180deg, var(--panel2), var(--panel)); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; }
+  .nums .v { font-size: 2.6rem; font-weight: 800; letter-spacing: -.035em; line-height: 1; }
+  .nums .l { font-family: "IBM Plex Mono", monospace; font-size: .74rem; color: var(--dimmer); margin-top: 8px; }
+
+  .passo { display: grid; grid-template-columns: 30px 1fr; gap: 0 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .passo:last-child { border-bottom: 0; }
+  .passo i { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--mint); display: block; margin-top: 1px; }
+  .passo p { font-size: .86rem; color: var(--dim); margin-top: 3px; line-height: 1.45; }
+
+  .fig { background: rgba(0,0,0,.22); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+  .fig svg { display: block; width: 100%; height: auto; }
+
+  /* ---------- capa ---------- */
+  .capa { justify-content: center; }
+  .capa svg.arv { position: absolute; right: 0; top: 0; width: 54%; height: 100%; }
+  .capa .lede { max-width: 40ch; font-size: 1.18rem; margin-top: 22px; }
+  .capa-meta { display: flex; gap: 42px; margin-top: 34px; font-size: .86rem; color: var(--dim); }
+  .capa-meta b { display: block; color: var(--ink); font-weight: 700; font-size: 1.04rem; margin-top: 3px; }
+  .capa .rodape { margin-top: 26px; font-family: "IBM Plex Mono", monospace; font-size: .78rem; color: var(--dimmer); max-width: 56ch; line-height: 1.6; }
+
+  /* ---------- trilha de progresso ---------- */
+  .trilha { position: absolute; left: 68px; bottom: 34px; height: 16px; }
+  .num-slide { position: absolute; right: 68px; bottom: 30px; font-family: "IBM Plex Mono", monospace; font-size: .78rem; color: var(--dimmer); }
+  .slide.sem-trilha .trilha { display: none; }
+  .notas { display: none; }   /* notas do apresentador: vao para o .pptx */
+
+  /* ---------- barra e modo apresentação ---------- */
+  .barra { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; gap: 14px; padding: 10px 16px; background: rgba(5,11,8,.92); border-bottom: 1px solid var(--line); font-family: "IBM Plex Mono", monospace; font-size: .78rem; color: var(--dim); }
+  .barra button { font: inherit; font-weight: 500; color: var(--bg); background: var(--mint); border: 0; border-radius: 6px; padding: 6px 14px; cursor: pointer; }
+  .barra button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .barra kbd { border: 1px solid var(--line2); border-radius: 4px; padding: 1px 6px; color: var(--ink); }
+  body.apresentando { overflow: hidden; background: #000; }
+  body.apresentando .barra { display: none; }
+  body.apresentando .deck { padding: 0; display: block; }
+  body.apresentando .slide { display: none; }
+  body.apresentando .slide.atual { display: flex; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(var(--z, 1)); border: 0; border-radius: 0; }
+
+  /* navegação pelo mouse: 1/4 esquerdo volta, o resto avança */
+  .zona { display: none; position: fixed; top: 0; bottom: 0; z-index: 40; background: transparent; border: 0; padding: 0 28px; color: var(--mint); font: 500 2.4rem "IBM Plex Mono", monospace; }
+  .zona span { opacity: 0; transition: opacity .15s; }
+  .zona:hover span { opacity: .7; }
+  #zonaVolta { left: 0; width: 25%; text-align: left; cursor: w-resize; }
+  #zonaAvanca { right: 0; width: 75%; text-align: right; cursor: e-resize; }
+  body.apresentando .zona { display: block; }
+
+  @page { size: 1280px 720px; margin: 0; }
+  @media print {
+    body { background: var(--bg); }
+    .barra { display: none; }
+    .deck { display: block; padding: 0; gap: 0; }
+    .slide { width: 1280px; height: 720px; max-width: none; border: 0; border-radius: 0; break-after: page; break-inside: avoid; }
+    .slide:last-child { break-after: auto; }
+  }
+
+  /* ---------- ajuste visual para projetor (03/11) ---------- */
+  :root { --dimmer: #7F9C8E; }
+  .secao { font-size: .86rem; }
+  .card .k { font-size: .82rem; }
+  .card p { font-size: 1rem; line-height: 1.48; }
+  .nota { font-size: .98rem; }
+  td, th { font-size: .97rem; }
+  th { font-size: .8rem; }
+  td.val { font-size: .9rem; }
+  .tag { font-size: .8rem; }
+  .card .ref, .nota .ref { font-size: .78rem; white-space: nowrap; }
+  .nums .l { font-size: .82rem; }
+  .passo p { font-size: .93rem; }
+  .codigo { font-size: .86rem; }
+  .capa .rodape { font-size: .86rem; max-width: none; }
+  .capa-meta { font-size: .92rem; }
+  .num-slide { font-size: .82rem; }
+
+  /* laminas com folga: texto maior, em vez de faixa vazia */
+  .folgada .cols { margin-top: 28px; gap: 22px; }
+  .folgada .card { padding: 24px 26px; gap: 13px; }
+  .folgada .card p { font-size: 1.1rem; }
+  .folgada td { font-size: 1.04rem; padding-top: 10px; padding-bottom: 10px; }
+  .folgada .nota { font-size: 1.06rem; margin-top: 24px; padding: 15px 20px; }
+  .folgada .lede { font-size: 1.18rem; }
+  .funcao { display: block; margin-top: 7px; font-size: .95rem; line-height: 1.35; color: var(--dim); }
+
+  /* cartao alto: as linhas ocupam a altura, sem vazio interno */
+  .preenche { justify-content: space-between; }
+  .preenche > table { flex: 1 1 auto; height: 100%; }
+
+  /* lamina mais densa */
+  .densa .cols { margin-top: 18px !important; gap: 16px !important; }
+  .densa .card { padding: 15px 20px; gap: 8px; }
+  .densa .card p { font-size: .97rem; line-height: 1.42; }
+  .densa .nota { font-size: .94rem; margin-top: 14px !important; padding: 10px 16px; }
+
+  /* evita palavra sozinha na ultima linha */
+  .card p, .passo p, td, .nota, .lede { text-wrap: pretty; }
+  .folgada .c-larga { grid-template-columns: 1.18fr .82fr; }
+  /* lamina 8: densa, mas aproveitando a altura */
+  .densa8 .cols { margin-top: 22px; gap: 18px; }
+  .densa8 .card { padding: 18px 20px; gap: 10px; }
+  .densa8 .card p { font-size: .98rem; line-height: 1.45; }
+  .densa8 .nota { font-size: .98rem; margin-top: 18px; padding: 12px 18px; }
+  /* lamina 13: distribui os blocos sem esticar as linhas da tabela */
+  .distribui { justify-content: space-between; }
+  .distribui p { font-size: 1.04rem; }
+
+  /* versao enxuta: topicos com o mesmo no da trilha */
+  .topicos { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+  .topicos li { position: relative; padding-left: 18px; line-height: 1.4; color: var(--dim); text-wrap: pretty; }
+  .topicos li::before { content: ""; position: absolute; left: 0; top: .52em; width: 7px; height: 7px; border-radius: 50%; background: var(--mint); }
+  .topicos li b { color: var(--ink); font-weight: 600; }
+  .card .k { color: var(--mint); }
+  .enx .card { gap: 12px; }
+  .enx .ref { display: block; }
+  /* lamina com folga na versao enxuta: letra maior, sem faixa vazia */
+  .ampla .cols { margin-top: 28px; gap: 22px; }
+  .ampla .card { padding: 26px 26px; gap: 16px; }
+  .ampla .topicos { gap: 15px; }
+  .ampla .topicos li { line-height: 1.38; }
+  .ampla .passo { padding: 15px 0 !important; }
+  .ampla .passo p { margin-top: 5px; }
+  .ampla .nota { margin-top: 26px; padding: 16px 20px; }
+  .ampla .nums { margin-top: 28px; }
+  .ampla .nums > div { padding: 24px 22px; }
+  .ampla .codigo { line-height: 2; }
+  /* lamina 10: quatro cartoes e uma nota */
+  .janelas .cols { margin-top: 22px !important; gap: 16px !important; }
+  .janelas .card { padding: 18px 22px; gap: 9px; }
+  .janelas .topicos { gap: 7px; }
+  .janelas .nota { margin-top: 16px !important; padding: 12px 18px; }
+  /* ajustes finos */
+  .onze .passo { padding: 10px 0 !important; }
+  .onze .codigo { line-height: 1.8; }
+  .doze .card { padding: 30px 28px; gap: 20px; }
+  .doze .topicos { gap: 20px; }
+  .capa .topicos { margin-top: 26px; gap: 14px; }
+  .deck .capa .capa-meta { font-size: .82rem; gap: 34px; margin-top: 28px; }
+  .deck .capa .capa-meta b { font-size: .92rem; font-weight: 600; line-height: 1.45; margin-top: 4px; }
+  .deck .capa .rodape { font-size: .82rem; margin-top: 22px; }
+  .deck .capa .lede { font-size: 1.12rem; }
+  .capa svg.arv { transition: opacity .35s ease; }
+  .capa svg.arv.trocando { opacity: 0 !important; }
+  @media print { .capa svg.arv.trocando { opacity: 1 !important; } }
+  .metricas { display: flex; flex-wrap: wrap; gap: 10px; }
+  .metricas .tag { padding: 6px 13px; }
+  /* escala unica de tipografia: um tamanho por funcao, em todas as laminas */
+  .deck .slide:not(.capa) .lede { font-size: 1.12rem; }
+  .deck .slide .card h3, .deck .slide .passo h3 { font-size: 1.08rem; }
+  .deck .slide .card p, .deck .slide .topicos li, .deck .slide td, .deck .slide .passo p, .deck .slide .nota { font-size: 1rem; }
+  .deck .slide td.val, .deck .slide td.num, .deck .slide .funcao, .deck .slide .formula { font-size: .92rem; }
+  .deck .slide .secao, .deck .slide .card .k, .deck .slide th, .deck .slide .tag, .deck .slide .ref, .deck .slide .nums .l, .deck .slide .codigo, .deck .slide .num-slide { font-size: .82rem; }
+  .deck .slide .nums .v { font-size: 2.6rem; }
+</style>
+
+<div class="barra">
+  <button id="btnApresentar">Apresentar</button>
+  <span>ou tecle <kbd>F</kbd> · navegue com <kbd>←</kbd> <kbd>→</kbd> · <kbd>Esc</kbd> sai</span>
+</div>
+
+<div class="deck">
+
+  <!-- 01 capa -->
+  <section class="slide capa">
+    <svg class="arv" viewBox="0 0 560 720" preserveAspectRatio="xMidYMid meet" aria-hidden="true" data-arvore="1"></svg>
+    <div style="max-width:620px">
+      <div class="secao">Proposta de robô com <b>aprendizado de máquina</b></div>
+      <h1>Cata-vento<br>Seletivo</h1>
+      <p class="lede">Robô de day trade no Mini Índice, em MQL5. A regra do DMI/ADX propõe a entrada, e uma floresta de 100 árvores decide se vale a pena.</p>
+      <div class="capa-meta">
+        <div>Integrantes<b>Luisa Caetano Araujo · RA 0076937<br>Raíssa Faria Ferreira · RA 0070311</b></div>
+        <div>Professor<b>Dr. Alexandre Pimenta</b></div>
+      </div>
+      <p class="rodape">Random Forest · ALGLIB · MQL5 · WIN$ · 15 minutos<br>Modelagem e Projeto de Algoritmos para o Mercado Financeiro</p>
+    </div>
+    <aside class="notas"><p>Nosso trabalho é a proposta do Cata-vento Seletivo: um robô de day trade no Mini Índice, escrito em MQL5, que roda inteiro dentro do MetaTrader 5.</p><p>A ideia em uma frase: a regra do DMI e do ADX, derivada do Cata-vento do Trabalho 01, propõe a entrada, e uma floresta de 100 árvores de decisão, um Random Forest, estima a probabilidade de aquela entrada dar certo. O robô só opera quando essa probabilidade é alta.</p><p>O Random Forest vem da ALGLIB, a biblioteca numérica que já acompanha o MetaTrader 5. Então treino, previsão e ordens acontecem no mesmo robô, sem Python.</p></aside>
+  </section>
+
+  <!-- 02 objetivo e justificativa -->
+  <section class="slide enx">
+    <div class="secao">Objetivo e justificativa · <b>por que aprendizado de máquina</b></div>
+    <h2>A mesma regra acerta num dia e erra no outro</h2>
+    <p class="lede">Um sinal de DI com ADX forte às 10h, logo depois de um gap, não é o mesmo sinal às 16h num dia parado. <b>O objetivo é um robô</b> que aprende em que contexto o sinal funciona e só opera esses casos.</p>
+    <div class="cols c3">
+      <div class="card"><span class="k"><span class="ponto v"></span>contexto</span><h3>O sinal depende do momento</h3><p><b>Hipótese:</b> horário, volatilidade e VWAP mudam a chance de acerto.</p></div>
+      <div class="card"><span class="k"><span class="ponto a"></span>não linear</span><h3>Ninguém escreve essas regras à mão</h3><p>A árvore encontra as interações sozinha.</p></div>
+      <div class="card"><span class="k"><span class="ponto r"></span>regime</span><h3>O mercado muda</h3><p>O modelo é retreinado a cada 20 pregões.</p></div>
+    </div>
+    <div class="cols c2" style="margin-top:18px">
+      <div class="card no-verde"><span class="k">vantagem competitiva</span><ul class="topicos"><li><b>Menos operações ruins:</b> deve subir o fator de lucro e baixar o rebaixamento</li><li><b>A base ainda precisa ser provada:</b> Trabalho 01, 1,36 (WINV26) e 1,11 (<code>WIN$</code> 2026) sem custos; 1,13 e 0,92 com custos</li><li><b>Esta regra, sem filtro:</b> 1,09 sem custos e 1,03 com custos</li></ul></div>
+      <div class="card"><span class="k">oportunidade de mercado</span><ul class="topicos"><li>Um dos contratos mais líquidos da B3</li><li><b>R$ 0,20 por ponto</b> e margem baixa</li><li>Day trade: sem risco de gap noturno</li></ul></div>
+    </div>
+    <aside class="notas"><p>Por que aprendizado de máquina? Porque a mesma regra acerta num dia e erra no outro. Um sinal de DI com ADX forte às 10h, logo depois de um gap, não é o mesmo sinal às 16h num dia parado, e a regra fixa trata os dois igual. O objetivo é um robô que aprende com o histórico em que contexto o sinal funciona e só opera nesses casos.</p><p>Três motivos para usar aprendizado. O sinal depende do contexto: horário, volatilidade e distância da VWAP. As interações entre essas variáveis não são lineares, e ninguém escreve essas regras à mão; uma árvore de decisão encontra sozinha. E o mercado muda, por isso o modelo é retreinado a cada 20 pregões.</p><p>A vantagem competitiva é operar menos e melhor: o filtro descarta os sinais de baixa probabilidade, o que deve subir o fator de lucro e baixar o rebaixamento. E a base é conhecida, mas a vantagem ainda precisa ser provada. No Trabalho 01, a regra fez 1,36 no WINV26, em 77 pregões, e 1,11 em 1.742 operações no WIN$ em 2026, ambos sem custos. Com o custo desta proposta, R$ 3 por operação, seriam 1,13 e 0,92. Uma medição preliminar da regra nova, sem filtro, deu 1,03 com custos de 2023 a 2026. A margem é fina, e é por isso que o filtro precisa operar menos e melhor.</p><p>Por que o Mini Índice: é um dos contratos mais líquidos da B3, vale R$ 0,20 por ponto, tem margem baixa e movimentos direcionais frequentes dentro do dia. E, como é day trade, não há risco de gap noturno.</p></aside>
+  </section>
+
+  <!-- 03 indicadores e entrada -->
+  <section class="slide folgada">
+    <div class="secao">Estratégia · <b>indicadores e entrada</b></div>
+    <h2>A regra propõe. A floresta decide.</h2>
+    <p class="lede">Regra do Trabalho 01, mais permissiva de propósito (ADX ≥ 20, não 25): gera candidatos em excesso, e o modelo seleciona.</p>
+    <div class="cols c-larga">
+      <div class="card">
+        <span class="k">entrada · lida só na barra fechada de 15 minutos</span>
+        <table>
+          <tr><td class="campo up">Candidato de compra</td><td><code>DI+ &gt; DI−</code> e <code>ADX ≥ 20</code> e <code>ADX subindo</code><span class="funcao">A alta domina, e a tendência ganha força.</span></td></tr>
+          <tr><td class="campo down">Candidato de venda</td><td><code>DI− &gt; DI+</code> e <code>ADX ≥ 20</code> e <code>ADX subindo</code><span class="funcao">O espelho: a baixa domina, e a tendência ganha força.</span></td></tr>
+          <tr><td class="campo amb">Filtro do modelo</td><td>Entra só se <code>P(alvo antes do stop) ≥ p*</code><span class="funcao">A estimativa do modelo precisa alcançar o limiar do ciclo.</span></td></tr>
+          <tr><td class="campo">Filtros operacionais</td><td class="desc">Entre 09:15 e 17:00, sem posição aberta, limites do dia livres</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <span class="k">indicadores · (n) = barras no cálculo</span>
+        <table class="apertada">
+          <tr><td class="campo up">DI+ / DI− (12)</td><td class="desc">direção: quem domina, compradores ou vendedores</td></tr>
+          <tr><td class="campo amb">ADX (12)</td><td class="desc">força da tendência, sem dizer o lado</td></tr>
+          <tr><td class="campo">ATR (14)</td><td class="desc">volatilidade: o movimento médio, que escala stop e alvo</td></tr>
+          <tr><td class="campo">VWAP do dia</td><td class="desc">preço médio ponderado pelo volume: contexto para o modelo</td></tr>
+        </table>
+      </div>
+    </div>
+    <aside class="notas"><p>A estratégia deriva do Cata-vento do Trabalho 01, mais permissiva e com saídas em ATR. A regra propõe e a floresta decide.</p><p>Candidato de compra: DI+ acima do DI−, ADX maior ou igual a 20 e subindo. A venda é o espelho. A leitura é sempre na barra fechada de 15 minutos. O ADX mínimo é 20, e não 25 como no Trabalho 01, de propósito: queremos candidatos em excesso, e a seleção fina fica com o modelo.</p><p>Depois da regra vem o filtro do modelo: só entra se a probabilidade de bater o alvo antes do stop for maior ou igual ao limiar p*. E os filtros operacionais: entre 9h15 e 17h, sem posição aberta e com os limites do dia livres.</p><p>Indicadores: DI+ e DI− de 12 períodos para a direção, ADX de 12 para a força, ATR de 14 para a volatilidade, que dá o tamanho do stop e do alvo, e a VWAP do dia como contexto para o modelo.</p><p>Se perguntarem por que o período 12 ficou fixo: o Trabalho 01 mostrou que ele não decide o resultado. De 8 a 20 períodos, no WINV26 e sem custos, o fator de lucro ficou entre 1,24 e 1,42, positivo nas sete variações. O aprendizado vai para onde há ganho, que é escolher os sinais.</p></aside>
+  </section>
+
+  <!-- 04 saidas e risco -->
+  <section class="slide enx">
+    <div class="secao">Estratégia · <b>saída e gestão de risco</b></div>
+    <h2>Quatro saídas: três em ATR, uma no relógio</h2>
+    <div class="cols c2">
+      <div class="card">
+        <span class="k">saída · com justificativa</span>
+        <table>
+          <tr><td class="campo">Stop loss</td><td class="val">1,5 × ATR</td><td class="desc">Acompanha o ruído do dia.</td></tr>
+          <tr><td class="campo">Take profit</td><td class="val">3,0 × ATR</td><td class="desc">Relação 2:1. Só com alvo e stop, o empate é em 1/3 de acertos, antes dos custos.</td></tr>
+          <tr><td class="campo">Zero a zero</td><td class="val">1,5 × ATR</td><td class="desc">Stop vai à entrada: protege o que já andou a favor.</td></tr>
+          <tr><td class="campo">Encerramento</td><td class="val">17:30</td><td class="desc">Nada atravessa o pregão.</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <span class="k">tamanho de posição · risco ajustado pela confiança do modelo</span>
+        <div class="formula">contratos = ⌊ R × Capital ÷ (1,5 × ATR × R$ 0,20) ⌋<br><span class="c">valor em risco ÷ perda de 1 contrato no stop<br>arredonda para baixo, entre 1 e 5 contratos</span></div>
+        <table class="apertada" style="margin-top:6px">
+          <tr><td class="campo">p* ≤ P &lt; 0,65</td><td class="val">R = 0,25%</td><td class="desc">do capital, com confiança moderada</td></tr>
+          <tr><td class="campo">P ≥ 0,65</td><td class="val">R = 0,50%</td><td class="desc">do capital, com confiança alta</td></tr>
+        </table>
+        <p>Com R$ 20 mil e ATR mediano de 380 pontos, <b>a fórmula dá 1 contrato quase sempre</b>. O tamanho só muda a partir de R$ 46 mil, aproximadamente.</p>
+      </div>
+    </div>
+    <div class="cols c3" style="margin-top:18px">
+      <div class="card"><span class="k">uma por vez</span><p>Só uma posição aberta.</p></div>
+      <div class="card"><span class="k">trava do dia</span><p>Até 4 operações. Para após −1,5% ou 3 stops seguidos.</p></div>
+      <div class="card"><span class="k">proteção no servidor</span><p>Toda ordem sai com stop e alvo.</p></div>
+    </div>
+    <aside class="notas"><p>Três saídas são medidas em ATR, o tamanho médio do movimento, para se ajustarem à volatilidade do dia; a quarta é no relógio, às 17h30.</p><p>Stop em 1,5 ATR: um múltiplo do ruído do dia, que não fica curto em dia agitado nem largo em dia calmo. Alvo em 3 ATR: relação de 2 para 1, então acertar mais de um terço das operações já cobre as perdas, antes dos custos. Zero a zero: depois de 1,5 ATR a favor, o stop vai para o preço de entrada; no Trabalho 01, no WINV26 e sem custos, isso levou o fator de lucro de 1,26 para 1,34. E encerramento às 17h30, porque é day trade.</p><p>O tamanho da posição é por risco fixo, ajustado pela confiança do modelo: arrisca 0,25% do capital com confiança moderada e 0,50% quando a probabilidade passa de 0,65, sempre entre 1 e 5 contratos. Com R$ 20 mil e o ATR mediano de 380 pontos medido no WIN$, a fórmula dá 1 contrato quase sempre, e o risco real sobe com a volatilidade: 0,57% do capital na mediana. O ajuste só passa a mudar o tamanho a partir de cerca de R$ 46 mil.</p><p>E a gestão do dia: uma posição por vez, sem pirâmide nem preço médio; no máximo 4 operações por dia; e o robô para depois de perder 1,5% do capital ou de 3 stops seguidos. Toda ordem já sai com stop e alvo no servidor da corretora: se a conexão cair, a proteção continua.</p></aside>
+  </section>
+
+  <!-- 05 tecnica -->
+  <section class="slide enx ampla">
+    <div class="secao">Aprendizado de máquina · <b>técnica escolhida</b></div>
+    <h2>Por que Random Forest</h2>
+    <p class="lede"><b>O problema é de classificação</b>: a operação bate o alvo antes do stop? É a <b>meta-rotulagem</b> de López de Prado (2018): a regra escolhe o lado, a floresta decide se entra.</p>
+    <div class="cols c-larga">
+      <div class="card preenche">
+        <span class="k">comparação com as outras técnicas permitidas</span>
+        <table>
+          <tr><th></th><th>poucos dados</th><th>treino</th><th>explicável</th><th>usa o contexto</th></tr>
+          <tr><td class="campo up">Random Forest</td><td><span class="tag ok">bom</span></td><td><span class="tag ok">segundos</span></td><td><span class="tag ok">sim</span></td><td><span class="tag ok">sim</span></td></tr>
+          <tr><td class="campo">Rede LSTM</td><td><span class="tag no">fraco</span></td><td><span class="tag no">lento</span></td><td><span class="tag no">não</span></td><td><span class="tag ok">sim</span></td></tr>
+          <tr><td class="campo">Algoritmo Genético</td><td><span class="tag ok">bom</span></td><td><span class="tag no">horas</span></td><td><span class="tag ok">sim</span></td><td><span class="tag no">não</span></td></tr>
+          <tr><td class="campo">Lógica Fuzzy</td><td><span class="tag ok">bom</span></td><td><span class="tag ok">rápido</span></td><td><span class="tag ok">sim</span></td><td><span class="tag">regras à mão</span></td></tr>
+        </table>
+      </div>
+      <div class="card no-verde">
+        <span class="k">o que pesou na escolha</span>
+        <ul class="topicos"><li><b>Seis meses dão cerca de 1.700 candidatos</b>: a floresta lida bem, e uma LSTM decoraria ruído</li><li><b>A média das árvores</b> reduz o sobreajuste</li><li><b>A importância das variáveis</b> indica o que pesa</li><li><b>Já existe no MetaTrader 5:</b> ALGLIB, sem Python</li></ul>
+      </div>
+    </div>
+    <aside class="notas"><p>O problema é de classificação: dado o contexto no momento do sinal, a operação bate o alvo antes do stop, sim ou não?</p><p>O Random Forest são 100 árvores de decisão, cada uma treinada numa amostra diferente dos dados, e a resposta é a média delas. É o que López de Prado chama de meta-rotulagem: a regra escolhe o lado, e o modelo decide se entra e com quanto.</p><p>Comparando com as outras técnicas permitidas: seis meses de dados dão cerca de 1.700 candidatos, muito parecidos entre si, e a floresta lida bem com esse tamanho; uma rede LSTM decoraria ruído. O algoritmo genético otimiza parâmetros fixos, mas não olha o contexto de cada operação. E a lógica fuzzy depende de regras escritas à mão.</p><p>O que pesou na escolha: a média de árvores diferentes reduz o sobreajuste de uma árvore isolada; a importância das variáveis mostra o que pesa na decisão; e já existe no MetaTrader 5, na ALGLIB, a classe CDForest. O robô treina e prevê em MQL5, sem Python.</p><p>Se perguntarem se dá mesmo para treinar dentro do MT5: sim. A ALGLIB vem com o MetaTrader 5, na pasta MQL5/Include/Math/Alglib, e o treino com cerca de 3 mil linhas leva menos de 5 segundos.</p></aside>
+  </section>
+
+  <!-- 06 caminho do sinal -->
+  <section class="slide enx">
+    <div class="secao">Aprendizado de máquina · <b>o caminho de um sinal</b></div>
+    <h2>Só vira ordem o que sobrevive às quatro etapas</h2>
+    <div class="fig" style="margin-top:24px;background:none;border:0;padding:0">
+      <svg viewBox="0 0 1144 230" aria-hidden="true" style="overflow:visible">
+        <g fill="none" stroke-linecap="round">
+          <path d="M40 92 H1100" stroke="#5EE6A8" stroke-width="3" style="filter:drop-shadow(0 0 5px rgba(94,230,168,.6))"/>
+          <path d="M300 92 C300 150 322 160 322 196 M560 92 C560 150 582 160 582 196 M820 92 C820 150 842 160 842 196" stroke="#284A3C" stroke-width="2"/>
+        </g>
+        <g font-family="Schibsted Grotesk">
+          <circle cx="40" cy="92" r="15" fill="#5EE6A8" style="filter:drop-shadow(0 0 6px rgba(94,230,168,.8))"/>
+          <circle cx="300" cy="92" r="15" fill="#08120E" stroke="#5EE6A8" stroke-width="3"/>
+          <circle cx="560" cy="92" r="15" fill="#08120E" stroke="#5EE6A8" stroke-width="3"/>
+          <circle cx="820" cy="92" r="15" fill="#08120E" stroke="#5EE6A8" stroke-width="3"/>
+          <circle cx="1100" cy="92" r="22" fill="#F2B84B" style="filter:drop-shadow(0 0 8px rgba(242,184,75,.6))"/>
+          <text x="40" y="40" fill="#E6F2EC" font-size="22" font-weight="700" text-anchor="middle">Sinal</text>
+          <text x="22" y="140" fill="#8BA89A" font-size="14" font-family="IBM Plex Mono">DI dominante</text>
+          <text x="300" y="40" fill="#E6F2EC" font-size="22" font-weight="700" text-anchor="middle">Força</text>
+          <text x="336" y="132" fill="#8BA89A" font-size="14" font-family="IBM Plex Mono">ADX ≥ 20, subindo</text>
+          <text x="560" y="40" fill="#E6F2EC" font-size="22" font-weight="700" text-anchor="middle">Operacional</text>
+          <text x="596" y="132" fill="#8BA89A" font-size="14" font-family="IBM Plex Mono">horário e limites</text>
+          <text x="820" y="40" fill="#E6F2EC" font-size="22" font-weight="700" text-anchor="middle">Floresta</text>
+          <text x="856" y="132" fill="#8BA89A" font-size="14" font-family="IBM Plex Mono">17 variáveis → P</text>
+          <text x="1100" y="40" fill="#F2B84B" font-size="22" font-weight="700" text-anchor="middle">Ordem</text>
+          <text x="1100" y="140" fill="#F2B84B" font-size="14" font-family="IBM Plex Mono" text-anchor="middle">P ≥ p*</text>
+          <text x="1100" y="161" fill="#8BA89A" font-size="14" font-family="IBM Plex Mono" text-anchor="middle">votos ≥ limiar</text>
+          <g font-family="IBM Plex Mono" font-size="14" fill="#F0626B">
+            <circle cx="322" cy="200" r="5"/><text x="334" y="205">sem força, descarta</text>
+            <circle cx="582" cy="200" r="5"/><text x="594" y="205">fora do horário ou travado</text>
+            <circle cx="842" cy="200" r="5"/><text x="854" y="205">P abaixo de p*, ignora</text>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div class="cols c2" style="margin-top:18px">
+      <div class="card">
+        <span class="k">como a floresta chega em P</span>
+        <ul class="topicos"><li>Cada árvore faz perguntas e termina numa classe: bate o alvo ou não</li><li><b>Cada árvore é um voto</b></li><li><b>P é a fração de votos das 100 árvores</b>: ordena os sinais, não é a chance real</li></ul>
+      </div>
+      <div class="card no-verde">
+        <span class="k">exemplo · sinal de compra às 10:45</span>
+        <table class="apertada">
+          <tr><td class="campo">Votos das 100 árvores</td><td class="num up">0,71</td></tr>
+                    <tr><td class="campo">Limiar p* do ciclo</td><td class="num amb">0,60</td></tr>
+          <tr><td class="campo">Decisão</td><td class="num up">entra, risco 0,50%</td></tr>
+        </table>
+      </div>
+    </div>
+    <aside class="notas"><p>Este é o caminho de um sinal até virar ordem: quatro etapas, e só vira ordem o que passa por todas. Primeiro, a regra do DI dominante. Depois, o ADX maior ou igual a 20 e subindo. Depois, os filtros de horário e limites do dia. Por fim, o modelo, que transforma as 17 variáveis numa probabilidade P. Só entra se P for maior ou igual ao limiar p*.</p><p>Como a floresta chega em P: cada árvore faz perguntas sobre as variáveis, por exemplo, o ADX passa de 28? É antes das 11h? O ATR está alto? E termina numa folha, que guarda uma classe: bate o alvo ou não. Cada árvore é um voto, e P é a fração de votos das 100 árvores. Se perguntarem se P é a chance real: não. O treino é balanceado, então P serve para ordenar os sinais, e a curva de calibração acompanha a diferença. No MQL5, isso é uma chamada só: DFProcess.</p><p>Exemplo: um sinal de compra às 10h45. 71 das 100 árvores votam em bater o alvo, então P é 0,71; o limiar do ciclo é 0,60; então o robô entra, e, como P passou de 0,65, com o risco cheio de 0,50%.</p></aside>
+  </section>
+
+  <!-- 07 features e rotulo -->
+  <section class="slide enx">
+    <div class="secao">Aprendizado de máquina · <b>o que o modelo vê e o que aprende</b></div>
+    <h2>Variáveis de entrada e rótulo</h2>
+    <div class="cols c-larga">
+      <div class="card preenche">
+        <span class="k">features · calculadas na barra do sinal, só com o passado</span>
+        <table class="apertada">
+          <tr><td class="campo">Tendência</td><td><code>ADX</code> <code>inclinação do ADX</code> <code>DI+ − DI−</code><span class="funcao">Mostra a força e o lado da tendência.</span></td></tr>
+          <tr><td class="campo">Volatilidade</td><td><code>ATR ÷ preço</code> <code>percentil do ATR</code> <code>amplitude do dia</code><span class="funcao">Mostra se o dia está agitado ou calmo.</span></td></tr>
+          <tr><td class="campo">Momento</td><td><code>retorno de 1, 4 e 16 barras</code><span class="funcao">Mostra quanto o preço andou até o sinal.</span></td></tr>
+          <tr><td class="campo">Posição no dia</td><td><code>distância à VWAP</code> <code>posição no dia</code> <code>gap de abertura</code><span class="funcao">Mostra onde o preço está dentro do dia.</span></td></tr>
+          <tr><td class="campo">Fluxo</td><td><code>volume ÷ média do horário</code><span class="funcao">Mostra se há mais negócios que o normal.</span></td></tr>
+          <tr><td class="campo">Calendário e sinal</td><td><code>minutos da abertura</code> <code>dia da semana</code> <code>sentido</code> <code>candidatos no dia</code><span class="funcao">Mostra quando o sinal ocorreu e de que lado.</span></td></tr>
+        </table>
+        <p>Tudo que tem direção é multiplicado pelo sentido: <b>um único modelo serve para compra e venda</b>.</p>
+      </div>
+      <div class="card">
+        <span class="k">rótulo · método das três barreiras</span>
+        <div class="fig" style="padding:10px 12px">
+          <svg viewBox="0 0 300 170" aria-hidden="true">
+            <rect x="20" y="22" width="250" height="1.5" fill="#5EE6A8"/><text x="24" y="16" font-family="IBM Plex Mono" font-size="10" fill="#5EE6A8">alvo · 3,0 × ATR</text>
+            <rect x="20" y="132" width="250" height="1.5" fill="#F0626B"/><text x="24" y="148" font-family="IBM Plex Mono" font-size="10" fill="#F0626B">stop · 1,5 × ATR</text>
+            <rect x="270" y="22" width="1.5" height="111" fill="#F2B84B"/><text x="246" y="164" font-family="IBM Plex Mono" font-size="10" fill="#F2B84B">17:30</text>
+            <path d="M20 96 L40 104 L60 92 L80 98 L100 80 L120 86 L140 66 L160 72 L180 50 L200 56 L220 34 L232 23" fill="none" stroke="#E6F2EC" stroke-width="1.8"/>
+            <circle cx="20" cy="96" r="3.5" fill="#E6F2EC"/><circle cx="232" cy="23" r="4.5" fill="#5EE6A8" style="filter:drop-shadow(0 0 4px rgba(94,230,168,.9))"/>
+            <text x="26" y="88" font-family="IBM Plex Mono" font-size="9.5" fill="#8BA89A">entrada</text>
+          </svg>
+        </div>
+        <ul class="topicos"><li>Simula <b>as mesmas saídas do robô</b>, em barras de 1 minuto</li><li>Alvo e stop na mesma barra: conta como stop</li></ul>
+        <p><b class="up">y = 1</b> se sai no alvo.<br><b class="down">y = 0</b> se sai no stop, no zero a zero ou às 17:30.</p>
+      </div>
+    </div>
+    <aside class="notas"><p>O que o modelo vê: 17 variáveis, todas calculadas na barra do sinal, só com dados do passado. São seis grupos. Tendência: o ADX, a inclinação do ADX e a diferença entre os DIs. Volatilidade: o ATR em relação ao preço, o percentil do ATR e a amplitude do dia. Momento: os retornos recentes. Posição no dia: a distância à VWAP, a posição entre a máxima e a mínima e o gap de abertura. Fluxo: o volume comparado com a média do mesmo horário. E calendário e sinal: os minutos desde a abertura, o dia da semana, o sentido e quantos candidatos já ocorreram no dia.</p><p>Um detalhe importante: tudo que tem direção é multiplicado pelo sentido da operação, mais 1 para compra e menos 1 para venda. Assim, "a favor" significa o mesmo nos dois lados, e um único modelo serve para compra e venda.</p><p>O rótulo, o que o modelo aprende, vem do método das três barreiras: cada sinal do histórico é simulado com as mesmas saídas do robô, stop, alvo, zero a zero e encerramento às 17h30, usando barras de 1 minuto. O rótulo é 1 se a operação sai no alvo e 0 se sai no stop, no zero a zero ou no fim do dia.</p><p>Se perguntarem o que acontece quando a mesma barra de 1 minuto toca o alvo e o stop: conta como stop. É a premissa conservadora, porque não dá para saber qual veio primeiro.</p></aside>
+  </section>
+
+  <!-- 08 otimizacao -->
+  <section class="slide enx ampla">
+    <div class="secao">Aprendizado de máquina · <b>o que se otimiza e sob quais regras</b></div>
+    <h2>Acurácia não paga conta. Fator de recuperação, sim.</h2>
+    <div class="cols c3">
+      <div class="card">
+        <span class="k"><span class="ponto v"></span>o que se pretende otimizar</span>
+        <ul class="topicos"><li><b>Limiar p*:</b> de 0,40 a 0,70, em passos de 0,025</li><li><b>Fração do treino por árvore:</b> 0,20, 0,35 ou 0,50</li><li><b>Variáveis por divisão:</b> 4 ou 8</li><li><b>Só ~12% batem o alvo:</b> y = 1 é replicado só no treino</li><li><b>78 combinações por ciclo</b>: grade pequena de propósito (Bailey <i>et al.</i>, 2014)</li></ul>
+      </div>
+      <div class="card no-amb">
+        <span class="k"><span class="ponto a"></span>função objetivo</span>
+        <div class="formula">F = Lucro ÷ Rebaixamento<br><span class="c">operações filtradas da validação, com custos</span></div>
+        <ul class="topicos"><li><b>Resultado em reais:</b> um modelo pode acertar muito e ainda perder dinheiro</li><li><b>Custos:</b> R$ 0,50 por contrato por lado, mais 1 tick</li></ul>
+      </div>
+      <div class="card">
+        <span class="k"><span class="ponto r"></span>restrições</span>
+        <ul class="topicos"><li><b>Mínimo de 20 operações</b> e fator de lucro ≥ 1,05</li><li>Se nenhuma passar, não opera no ciclo seguinte</li><li><b>Sem olhar o futuro:</b> só barras fechadas</li><li><b>Sem vazamento:</b> tudo fecha até as 17:30</li></ul>
+      </div>
+    </div>
+    <div class="nota alerta">As regras de DMI/ADX e as saídas em ATR <b>ficam fixas</b>, para não multiplicar o risco de sobreajuste.</div>
+    <aside class="notas"><p>O que se otimiza: a seleção das operações, ou seja, a probabilidade de bater o alvo dado o contexto. Junto, o limiar p*, de 0,40 a 0,70 em passos de 0,025, que são 13 valores, e dois hiperparâmetros da ALGLIB: a fração do treino que cada árvore vê, 0,20, 0,35 ou 0,50, e quantas variáveis cada divisão sorteia, 4 ou 8. São 6 configurações vezes 13 limiares: 78 combinações por ciclo. A grade é pequena de propósito: quanto mais combinações se testa, maior a chance de a melhor ser sorte (Bailey e coautores, 2014).</p><p>A função objetivo é o fator de recuperação, lucro dividido pelo rebaixamento, nas operações filtradas da validação e já com custos. Acurácia não paga conta: um modelo pode acertar muito e ainda perder dinheiro. As árvores em si minimizam a impureza de Gini, mas a escolha final é pelo resultado em reais. Custos: R$ 0,50 por contrato por lado, mais 1 tick de derrapagem.</p><p>Restrições: no mínimo 20 operações e fator de lucro de pelo menos 1,05 na validação, senão a combinação é descartada. Se nenhuma sobrar, o robô não opera nos 20 pregões seguintes e registra o ciclo. Nada de olhar o futuro nem de vazamento de rótulo. E as regras da estratégia ficam fixas: otimizar a regra e o filtro juntos mudaria o rótulo a cada tentativa e multiplicaria o risco de sobreajuste.</p><p>Se perguntarem por que 100 árvores fixas: em Brier e log loss, mais árvores não pioram; em taxa de erro e AUC pode haver pequenas oscilações, mas ajustar o número de árvores não é recomendado (Probst e Boulesteix, 2018), e acima de 64 a 128 árvores o ganho é desprezível (Oshiro e coautores, 2012).</p><p>Se perguntarem por que replicar a classe minoritária: na medição preliminar no WIN$, só cerca de 12% dos candidatos batem o alvo. A ALGLIB não aceita peso por classe, então replicar as linhas só no treino dá efeito parecido. Por isso o erro out-of-bag não é usado como evidência: em teste com dados aleatórios, ele mostrou 7,5% quando o erro real era 50%.</p></aside>
+  </section>
+
+  <!-- 09 janela movel -->
+  <section class="slide enx ampla">
+    <div class="secao">Arquitetura temporal · <b>janela móvel</b></div>
+    <h2>Treina no passado, opera o mês seguinte, repete</h2>
+    <div class="fig" style="margin-top:24px">
+      <svg viewBox="0 0 1110 196" aria-hidden="true">
+        <g font-family="IBM Plex Mono" font-size="13">
+          <g data-ciclos></g>
+          <line x1="70" y1="168" x2="1104" y2="168" stroke="#284A3C"/>
+          <text x="70" y="190" fill="#5A7568">tempo →  cada ciclo avança 20 pregões</text>
+          <text x="1104" y="190" fill="#F2B84B" text-anchor="end">execuções somadas = resultado fora da amostra</text>
+        </g>
+      </svg>
+    </div>
+    <div class="nums">
+      <div><div class="v up">120</div><div class="l">pregões na janela de treinamento (90 + 30)</div></div>
+      <div><div class="v amb">20</div><div class="l">pregões de execução</div></div>
+      <div><div class="v">~40</div><div class="l">ciclos fora da amostra</div></div>
+      <div><div class="v">2023–26</div><div class="l">WIN$ M15, ~960 pregões</div></div>
+    </div>
+    <div class="nota">A configuração vencedora é <b>retreinada nos 120 pregões</b> e opera os 20 seguintes. No Trabalho 01, não havia período fora da amostra planejado. Aqui, cada mês operado é um mês que o modelo nunca viu.</div>
+    <aside class="notas"><p>A arquitetura temporal é uma janela móvel, o walk-forward: treina no passado, opera o mês seguinte e repete. Cada ciclo usa 120 pregões, 90 para treinar e os 30 seguintes para validar, e depois opera 20 pregões que o modelo nunca viu. Aí a janela anda 20 pregões e tudo se repete.</p><p>De 2023 a 2026 são cerca de 960 pregões do WIN$ em 15 minutos, o que dá uns 40 ciclos fora da amostra.</p><p>Isso resolve uma limitação do Trabalho 01, cujo resultado principal foi medido no próprio WINV26, sem período fora da amostra planejado. Depois houve um teste no WIN$ em 2026, que dá 1,11 sem custos, mas não é totalmente inédito. Aqui, cada mês operado é um mês que o modelo nunca viu.</p></aside>
+  </section>
+
+  <!-- 10 por que esses tamanhos de janela -->
+  <section class="slide enx janelas">
+    <div class="secao">Arquitetura temporal · <b>por que esses tamanhos</b></div>
+    <h2>Cada janela tem um motivo e uma referência</h2>
+    <div class="cols c2" style="margin-top:22px;gap:18px">
+      <div class="card no-verde"><span class="k"><span class="ponto v"></span>janela de treinamento · 120 pregões</span><h3>Nem curta, nem longa</h3><ul class="topicos"><li>Curta tem poucos exemplos; longa mistura regimes (<i>concept drift</i>)</li><li>Com menos de 200 candidatos, o treino passa a 180 pregões; hoje, cerca de 1.700</li></ul><span class="ref">Gama et al., 2014</span></div>
+      <div class="card"><span class="k"><span class="ponto v"></span>validação · 30 pregões, sempre depois</span><h3>Nunca embaralhar o tempo</h3><ul class="topicos"><li>Validar antes do treino seria ver o futuro</li><li>Sem filtro, rendem de 70 a 97 operações, mas 21 de 42 validações ficam abaixo de 1,05</li></ul><span class="ref">Tashman, 2000 · López de Prado, 2018, cap. 7</span></div>
+      <div class="card"><span class="k"><span class="ponto a"></span>execução · 20 pregões, avança 20</span><h3>Walk-forward</h3><ul class="topicos"><li>Otimiza num trecho, opera no seguinte, repete</li><li>Execuções emendadas formam uma só curva fora da amostra</li></ul><span class="ref">Pardo, 2008</span></div>
+      <div class="card no-amb"><span class="k"><span class="ponto r"></span>robustez</span><h3>60 e 250 pregões: relatar, não escolher</h3><ul class="topicos"><li>Outras janelas entram só no relatório</li><li>Escolher a melhor depois seria sobreajuste à janela</li></ul><span class="ref">Bailey et al., 2014</span></div>
+    </div>
+    <div class="nota" style="margin-top:18px"><b>Sem vazamento:</b> a fronteira entre janelas é o fim do pregão, e todo rótulo se resolve até as 17:30.</div>
+    <aside class="notas"><p>Cada tamanho de janela tem um motivo e uma referência, como o professor pediu.</p><p>Treino de 120 pregões: janela curta acompanha o regime, mas tem poucos exemplos; janela longa é estável, mas mistura regimes que já passaram. É o dilema do concept drift, e a janela deslizante é a resposta clássica (Gama e coautores, 2014). Decidimos antes uma regra: se houver menos de 200 candidatos na janela, o treino passa a 180 pregões. Na medição preliminar são cerca de 1.700, então ela é só uma proteção.</p><p>Validação de 30 pregões, sempre depois do treino: validar com dados anteriores ao treino seria deixar o modelo ver o futuro (Tashman, 2000; López de Prado, 2018). E 30 pregões ainda devem render as 20 operações que a função objetivo exige: sem filtro, a medição preliminar dá de 70 a 97.</p><p>Execução de 20 pregões: é o walk-forward de Pardo (2008). Otimiza num trecho, opera no seguinte e repete; as execuções não se sobrepõem e, emendadas, formam uma única curva fora da amostra.</p><p>Robustez: também vamos rodar janelas de 60 e de 250 pregões, mas só para relatar, sem escolher a melhor depois de ver o resultado, o que seria sobreajuste à janela (Bailey e coautores, 2014).</p><p>E não há vazamento: a fronteira entre janelas é sempre o fim do pregão, e todo rótulo se resolve até as 17h30. É a "purga" de López de Prado, sem precisar descartar nada.</p><p>Se perguntarem por que 120 e não outro número: é o meio-termo entre acompanhar o regime e ter exemplos suficientes, com a regra dos 200 candidatos decidida antes. As alternativas de 60 e 250 vão aparecer no relatório.</p></aside>
+  </section>
+
+  <!-- 11 avaliacao -->
+  <section class="slide enx ampla">
+    <div class="secao">Avaliação · <b>só o resultado fora da amostra</b></div>
+    <h2>Como vamos saber se funcionou</h2>
+    <div class="cols c2">
+      <div class="card no-verde">
+        <span class="k">a hipótese se confirma se</span>
+        <div class="formula">FR(filtro) &gt; FR(regra sem filtro)<br><span class="c">FR = fator de recuperação, fora da amostra</span></div>
+        <ul class="topicos"><li>Na curva completa fora da amostra</li><li>Na maioria dos ciclos</li><li><b>Se não superar, será relatado</b></li></ul>
+      </div>
+      <div class="card">
+        <span class="k">comparado com · mesmo período e custos</span>
+        <div class="passo"><i></i><div><h3>Regra sem filtro</h3><p>O mesmo robô com o filtro desligado. Isola o valor do Random Forest.</p></div></div>
+        <div class="passo"><i style="background:var(--amb);border-color:var(--amb)"></i><div><h3>Cata-vento original</h3><p>O robô do Trabalho 01, com parâmetros fixos. Mede se há ganho sobre a base.</p></div></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:22px">
+      <span class="k">métricas</span>
+      <div class="metricas"><span class="tag ok">fator de recuperação</span><span class="tag">lucro líquido</span><span class="tag">fator de lucro</span><span class="tag">rebaixamento</span><span class="tag">acerto</span><span class="tag">número de operações</span><span class="tag">AUC</span></div>
+    </div>
+    <aside class="notas"><p>Como vamos saber se funcionou: só conta o resultado fora da amostra, comparado com duas referências. A regra sem filtro, que é o mesmo robô com o modelo desligado e isola o valor do Random Forest. E o Cata-vento original do Trabalho 01, com parâmetros fixos.</p><p>Métricas: lucro líquido, fator de lucro, rebaixamento, fator de recuperação, taxa de acerto, número de operações e AUC. A hipótese se confirma se o filtro superar a regra sem filtro em fator de recuperação na curva fora da amostra completa e na maioria dos ciclos. Se não superar, isso também é resultado, e será relatado.</p><p>Se perguntarem o que é AUC: a área sob a curva ROC. Mede se o modelo põe os sinais bons acima dos ruins, independentemente do limiar; 0,5 é o acaso.</p></aside>
+  </section>
+
+  <!-- 12 encerramento -->
+  <section class="slide capa sem-trilha">
+    <svg class="arv" viewBox="0 0 560 720" preserveAspectRatio="xMidYMid meet" aria-hidden="true" data-arvore="2" style="opacity:.8"></svg>
+    <div style="max-width:600px">
+      <div class="secao">Cata-vento Seletivo · <b>WIN$ · B3</b></div>
+      <h1 style="font-size:4.6rem">Em resumo</h1>
+      <ul class="topicos"><li><b>Problema:</b> a regra tem margem fina depois dos custos: 1,03 sem filtro, de 2023 a 2026.</li><li><b>Solução:</b> a regra propõe, e um Random Forest, retreinado a cada 20 pregões, escolhe quais sinais operar.</li><li><b>Avaliação:</b> só conta o resultado fora da amostra. O filtro precisa superar a regra sem filtro; se não superar, será relatado.</li></ul>
+      <p class="lede" style="margin-top:26px"><b>Agradecemos a atenção.</b> Ficamos à disposição para as perguntas.</p>
+    </div>
+    <aside class="notas"><p>Resumindo: o Cata-vento Seletivo parte da regra do Trabalho 01, cuja vantagem é fina depois dos custos, e usa um Random Forest, treinado dentro do MetaTrader 5 com a ALGLIB, para escolher quais sinais operar. Tudo é avaliado fora da amostra, numa janela móvel com tamanhos justificados pela literatura.</p><p>Agradecemos a atenção e ficamos à disposição para perguntas.</p><p>Perguntas prováveis, para ter à mão. Dá para treinar Random Forest dentro do MT5? Sim, com a ALGLIB, em segundos. Como o walk-forward roda no Testador? O robô conta os pregões e retreina sozinho a cada 20. Por que 120 pregões? É o meio-termo entre acompanhar o regime e ter exemplos, com a regra dos 200 candidatos. Por que não ONNX? O modelo ficaria congelado, sem retreino dentro da plataforma.</p></aside>
+  </section>
+
+</div>
+
+<button class="zona" id="zonaVolta" type="button" aria-label="Lâmina anterior"><span>‹</span></button>
+<button class="zona" id="zonaAvanca" type="button" aria-label="Próxima lâmina"><span>›</span></button>
+<script>
+(function () {
+  // ---------- árvore da capa: caminho aceso até a folha 0,71 ----------
+  let quadroArvore = 0;
+  function arvore(svg) {
+    const base = '#1C3229', aceso = '#5EE6A8', vermelho = '#F0626B';
+    const favor = { cor: aceso, brilho: 'rgba(94,230,168,.85)', rotulo: 'alvo', legenda: '1 voto a favor' };
+    const contra = { cor: vermelho, brilho: 'rgba(240,98,107,.8)', rotulo: 'não', legenda: '1 voto contra' };
+    const modelos = [
+      { ...favor, fim: 5,
+        nos: [[300, 110, 'ADX ≥ 28 ?', 1, 'tendência forte'], [170, 270, 'gap ?', 0, 'abriu com salto'], [430, 270, 'antes 11h ?', 1, 'começo do dia'], [100, 450, 'VWAP ?', 0, 'preço médio'], [240, 450, 'volume ?', 0, 'negócios'], [360, 450, 'ATR ?', 1, 'volatilidade'], [500, 450, 'DI ± ?', 0, 'quem domina']],
+        galhos: [[0, 1, 0], [0, 2, 1], [1, 3, 0], [1, 4, 0], [2, 5, 1], [2, 6, 0]],
+        folhas: [[3, 590, vermelho, .55], [4, 610, aceso, .3], [6, 610, vermelho, .55]] },
+      { ...contra, fim: 4,
+        nos: [[300, 110, 'volume alto ?', 1, 'muitos negócios'], [170, 270, 'VWAP longe ?', 1, 'longe do médio'], [430, 270, 'depois 15h ?', 0, 'fim do dia'], [100, 450, 'gap ?', 0, 'abriu com salto'], [240, 450, 'ATR alto ?', 1, 'dia agitado'], [360, 450, 'DI ± ?', 0, 'quem domina'], [500, 450, 'ADX ≥ 28 ?', 0, 'tendência forte']],
+        galhos: [[0, 1, 1], [0, 2, 0], [1, 3, 0], [1, 4, 1], [2, 5, 0], [2, 6, 0]],
+        folhas: [[3, 610, aceso, .3], [5, 590, vermelho, .55], [6, 610, aceso, .3]] },
+      { ...favor, fim: 3,
+        nos: [[300, 110, 'retorno alto ?', 1, 'preço já andou'], [170, 270, 'volume alto ?', 1, 'muitos negócios'], [430, 270, 'gap ?', 0, 'abriu com salto'], [100, 450, 'ATR médio ?', 1, 'dia normal'], [240, 450, 'VWAP ?', 0, 'preço médio'], [360, 450, 'manhã ?', 0, 'antes das 12h'], [500, 450, 'DI ± ?', 0, 'quem domina']],
+        galhos: [[0, 1, 1], [0, 2, 0], [1, 3, 1], [1, 4, 0], [2, 5, 0], [2, 6, 0]],
+        folhas: [[4, 610, vermelho, .55], [5, 590, aceso, .3], [6, 610, vermelho, .55]] },
+      { ...contra, fim: 6,
+        nos: [[300, 110, 'ATR alto ?', 1, 'dia agitado'], [170, 270, 'volume ?', 0, 'negócios'], [430, 270, 'gap ?', 1, 'abriu com salto'], [100, 450, 'DI ± ?', 0, 'quem domina'], [240, 450, 'VWAP ?', 0, 'preço médio'], [360, 450, 'manhã ?', 0, 'antes das 12h'], [500, 450, 'tarde ?', 1, 'após as 12h']],
+        galhos: [[0, 1, 0], [0, 2, 1], [1, 3, 0], [1, 4, 0], [2, 5, 0], [2, 6, 1]],
+        folhas: [[3, 610, aceso, .3], [4, 590, vermelho, .55], [5, 610, aceso, .3]] }
+    ];
+    const { nos, galhos, folhas, fim, cor, brilho, rotulo, legenda } = modelos[quadroArvore];
+    const sombra = 'filter:drop-shadow(0 0 6px rgba(94,230,168,.7))';
+    let d = '';
+    galhos.forEach(([a, b, on]) => {
+      const [x1, y1] = nos[a], [x2, y2] = nos[b], m = (y1 + y2) / 2;
+      d += `<path d="M${x1} ${y1 + 25} C${x1} ${m} ${x2} ${m} ${x2} ${y2 - 25}" fill="none" stroke="${on ? aceso : base}" stroke-width="${on ? 3 : 2}" stroke-linecap="round"${on ? ` style="${sombra}"` : ''}/>`;
+    });
+    folhas.forEach(([n, y]) => {
+      d += `<path d="M${nos[n][0]} ${nos[n][1] + 25} L${nos[n][0]} ${y - 14}" stroke="${base}" stroke-width="2"/>`;
+    });
+    const xf = nos[fim][0];
+    d += `<path d="M${xf} 475 V556" stroke="${aceso}" stroke-width="3" style="${sombra}"/>`;
+    nos.forEach(([x, y, t, on, ex]) => {
+      const w = Math.max(t.length * 9, ex.length * 6.6) + 26;
+      d += `<rect x="${x - w / 2}" y="${y - 25}" width="${w}" height="50" rx="18" fill="#0E1D17" stroke="${on ? aceso : base}"/>`;
+      d += `<text x="${x}" y="${y - 3}" text-anchor="middle" font-family="IBM Plex Mono" font-size="14" fill="${on ? '#E6F2EC' : '#8BA89A'}">${t}</text>`;
+      d += `<text x="${x}" y="${y + 14}" text-anchor="middle" font-family="Schibsted Grotesk" font-size="12.5" fill="${on ? '#A9C4B6' : '#7F9C8E'}">${ex}</text>`;
+    });
+    folhas.forEach(([n, y, c, o]) => d += `<circle cx="${nos[n][0]}" cy="${y}" r="14" fill="${c}" opacity="${o}"/>`);
+    d += `<circle cx="${xf}" cy="580" r="24" fill="${cor}" style="filter:drop-shadow(0 0 12px ${brilho})"/>`;
+    d += `<text x="${xf}" y="586" text-anchor="middle" font-family="IBM Plex Mono" font-size="15" font-weight="500" fill="#08120E">${rotulo}</text>`;
+    d += `<text x="${xf}" y="634" text-anchor="middle" font-family="IBM Plex Mono" font-size="15" fill="${cor}">${legenda}</text>`;
+    const passo = 26, x0 = 280 - 1.5 * passo, yt = 680;
+    d += `<line x1="${x0}" y1="${yt}" x2="${x0 + 3 * passo}" y2="${yt}" stroke="#1C3229" stroke-width="2"/>`;
+    d += `<line x1="${x0}" y1="${yt}" x2="${x0 + quadroArvore * passo}" y2="${yt}" stroke="#5EE6A8" stroke-width="2"/>`;
+    modelos.forEach((_, k) => {
+      const x = x0 + k * passo;
+      if (k < quadroArvore) d += `<circle cx="${x}" cy="${yt}" r="3.5" fill="#5EE6A8"/>`;
+      else if (k === quadroArvore) d += `<circle cx="${x}" cy="${yt}" r="6" fill="#5EE6A8" style="filter:drop-shadow(0 0 5px rgba(94,230,168,.9))"/>`;
+      else d += `<circle cx="${x}" cy="${yt}" r="3.5" fill="#08120E" stroke="#284A3C" stroke-width="1.5"/>`;
+    });
+    svg.innerHTML = d;
+  }
+  const arvores = [...document.querySelectorAll('svg[data-arvore]')];
+  const desenharArvores = () => arvores.forEach(arvore);
+  const semMovimento = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let relogioArvore = null, trocaArvore = null;
+  // carrossel: sempre 1, 2, 3, 4 e volta ao 1; ao aparecer a lâmina, recomeça do 1
+  function reiniciarArvores() {
+    clearInterval(relogioArvore); clearTimeout(trocaArvore);
+    quadroArvore = 0; desenharArvores();
+    arvores.forEach(a => a.classList.remove('trocando'));
+    if (semMovimento) return;
+    relogioArvore = setInterval(() => {
+      arvores.forEach(a => a.classList.add('trocando'));
+      trocaArvore = setTimeout(() => {
+        quadroArvore = (quadroArvore + 1) % 4;
+        desenharArvores();
+        arvores.forEach(a => a.classList.remove('trocando'));
+      }, 350);
+    }, 8000);
+  }
+  // no PDF, fica o primeiro quadro
+  addEventListener('beforeprint', reiniciarArvores);
+  reiniciarArvores();
+
+  // ---------- ciclos da janela móvel ----------
+  const g = document.querySelector('[data-ciclos]');
+  if (g) {
+    let d = '';
+    for (let c = 0; c < 3; c++) {
+      const x = 70 + c * 116, y = 14 + c * 50;
+      d += `<text x="0" y="${y + 18}" fill="#5A7568">ciclo ${c + 1}</text>`;
+      d += `<rect x="${x}" y="${y}" width="522" height="26" rx="13" fill="rgba(94,230,168,.12)" stroke="#5EE6A8"/><text x="${x + 261}" y="${y + 18}" fill="#5EE6A8" text-anchor="middle">treino · 90 pregões</text>`;
+      d += `<rect x="${x + 528}" y="${y}" width="174" height="26" rx="13" fill="rgba(139,168,154,.10)" stroke="#5A7568"/><text x="${x + 615}" y="${y + 18}" fill="#E6F2EC" text-anchor="middle">validação · 30</text>`;
+      d += `<rect x="${x + 708}" y="${y}" width="${c === 2 ? 94 : 110}" height="26" rx="13" fill="rgba(242,184,75,.14)" stroke="#F2B84B"/><text x="${x + 708 + (c === 2 ? 47 : 55)}" y="${y + 18}" fill="#F2B84B" text-anchor="middle">opera · 20</text>`;
+    }
+    g.innerHTML = d;
+  }
+
+  // ---------- trilha de progresso e número ----------
+  const slides = [...document.querySelectorAll('.slide')];
+  slides.forEach((s, idx) => {
+    const n = slides.length, passo = 26, W = (n - 1) * passo + 16;
+    let d = `<line x1="8" y1="8" x2="${8 + (n - 1) * passo}" y2="8" stroke="#1C3229" stroke-width="2"/>`;
+    d += `<line x1="8" y1="8" x2="${8 + idx * passo}" y2="8" stroke="#5EE6A8" stroke-width="2"/>`;
+    for (let j = 0; j < n; j++) {
+      const x = 8 + j * passo;
+      if (j < idx) d += `<circle cx="${x}" cy="8" r="3.5" fill="#5EE6A8"/>`;
+      else if (j === idx) d += `<circle cx="${x}" cy="8" r="6" fill="#5EE6A8" style="filter:drop-shadow(0 0 5px rgba(94,230,168,.9))"/>`;
+      else d += `<circle cx="${x}" cy="8" r="3.5" fill="#08120E" stroke="#284A3C" stroke-width="1.5"/>`;
+    }
+    s.insertAdjacentHTML('beforeend', `<svg class="trilha" width="${W}" height="16" viewBox="0 0 ${W} 16" aria-hidden="true">${d}</svg><div class="num-slide">${String(idx + 1).padStart(2, '0')} / ${String(n).padStart(2, '0')}</div>`);
+  });
+
+  // ---------- modo apresentação ----------
+  const corpo = document.body;
+  let i = 0;
+  function escalar() {
+    if (!corpo.classList.contains('apresentando')) return;
+    document.documentElement.style.setProperty('--z', Math.min(innerWidth / 1280, innerHeight / 720));
+  }
+  function mostrar(n) {
+    const antes = i;
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    if (i !== antes && slides[i].querySelector('svg[data-arvore]')) reiniciarArvores();
+    slides.forEach((s, k) => s.classList.toggle('atual', k === i));
+    escalar();
+  }
+  function entrar() {
+    corpo.classList.add('apresentando'); mostrar(i);
+    if (slides[i].querySelector('svg[data-arvore]')) reiniciarArvores();
+    const pedir = document.documentElement.requestFullscreen;
+    if (pedir) pedir.call(document.documentElement).catch(() => {});
+  }
+  function sair() {
+    corpo.classList.remove('apresentando');
+    slides.forEach(s => s.classList.remove('atual'));
+    if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(() => {});
+    slides[i].scrollIntoView({ block: 'center' });
+  }
+  document.getElementById('btnApresentar').addEventListener('click', entrar);
+  addEventListener('keydown', e => {
+    if (!corpo.classList.contains('apresentando')) {
+      if (e.key === 'f' || e.key === 'F') {
+        const meio = innerHeight / 2; let melhor = 0, dist = Infinity;
+        slides.forEach((s, k) => { const r = s.getBoundingClientRect(), dd = Math.abs(r.top + r.height / 2 - meio); if (dd < dist) { dist = dd; melhor = k; } });
+        i = melhor; entrar(); e.preventDefault();
+      }
+      return;
+    }
+    if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)) { mostrar(i + 1); e.preventDefault(); }
+    else if (['ArrowLeft', 'PageUp'].includes(e.key)) { mostrar(i - 1); e.preventDefault(); }
+    else if (e.key === 'Home') { mostrar(0); e.preventDefault(); }
+    else if (e.key === 'End') { mostrar(slides.length - 1); e.preventDefault(); }
+    else if (e.key === 'Escape') sair();
+  });
+  // mouse: clique nas zonas e rolagem. Um gesto de rolagem passa uma lâmina só,
+  // mesmo com a inércia do trackpad.
+  [['zonaVolta', -1], ['zonaAvanca', 1]].forEach(([id, passo]) => {
+    const b = document.getElementById(id);
+    b.addEventListener('click', () => { mostrar(i + passo); b.blur(); });
+  });
+  let rolando = null;
+  addEventListener('wheel', e => {
+    if (!corpo.classList.contains('apresentando') || e.ctrlKey) return;
+    if (!rolando && Math.abs(e.deltaY) >= 8) mostrar(i + (e.deltaY > 0 ? 1 : -1));
+    clearTimeout(rolando);
+    rolando = setTimeout(() => { rolando = null; }, 220);
+  }, { passive: true });
+  addEventListener('resize', escalar);
+  addEventListener('fullscreenchange', () => { if (!document.fullscreenElement && corpo.classList.contains('apresentando')) sair(); });
+})();
+</script>
+</html>

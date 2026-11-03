@@ -50,39 +50,51 @@
   table.t th, table.t td { padding: 5px 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
   table.t th { font-family: "IBM Plex Mono", monospace; font-size: 7.8pt; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); font-weight: 500; background: var(--soft); }
   table.t td.num { font-family: "IBM Plex Mono", monospace; white-space: nowrap; }
+  table.t.longa { break-inside: auto; }
+  table.t tr { break-inside: avoid; }
 
   .formula {
     font-family: "IBM Plex Mono", monospace; font-size: 9.8pt;
     background: var(--soft); border-left: 3px solid var(--alta);
     padding: 10px 14px; margin: 10px 0; break-inside: avoid; line-height: 1.7;
   }
+  pre.codigo {
+    font-family: "IBM Plex Mono", monospace; font-size: 8.4pt; line-height: 1.5;
+    background: var(--soft); border-left: 3px solid var(--adx);
+    padding: 10px 14px; margin: 10px 0; break-inside: avoid; white-space: pre; overflow-x: auto;
+  }
+  pre.codigo .c { color: var(--dim); }
+  .destaque { border: 1px solid var(--alta); background: #EEF8F3; border-radius: 6px; padding: 10px 14px; margin: 10px 0; break-inside: avoid; }
   .up { color: var(--alta); font-weight: 600; }
   .down { color: var(--baixa); font-weight: 600; }
   figure { margin: 12px 0; break-inside: avoid; }
   figcaption { font-size: 8.6pt; color: var(--dim); margin-top: 4px; }
   .refs li { font-size: 9.3pt; }
+  .ref { color: var(--dim); font-size: .92em; }
 </style>
 
 <div class="eyebrow">Proposta de trabalho · Modelagem e Projeto de Algoritmos para o Mercado Financeiro</div>
 <h1>Cata-vento Seletivo</h1>
-<p class="sub">Robô de day trade no Mini Índice que usa Random Forest para escolher quais sinais operar, com retreino em janela móvel</p>
+<p class="sub">Robô de day trade no Mini Índice, escrito em MQL5 para rodar no MetaTrader 5, que usa Random Forest para escolher quais sinais operar, com retreino em janela móvel feito dentro do próprio robô</p>
 
 <!-- ============================================================ -->
 <h2><span class="n">4.1</span>Título e identificação</h2>
 <table class="ident">
-  <tr><td>Título</td><td><b>Cata-vento Seletivo</b>: robô de day trade no Índice Futuro (WIN) com filtro de sinais por Random Forest retreinado em janela móvel (<i>walk-forward</i>)</td></tr>
-  <tr><td>Integrantes</td><td>Luisa Caetano Araujo · RA <span class="preencher">__________</span><br>Raíssa <span class="preencher">__________</span> · RA <span class="preencher">__________</span></td></tr>
+  <tr><td>Título</td><td><b>Cata-vento Seletivo</b>: robô de day trade no Índice Futuro (WIN) para MetaTrader 5, com filtro de sinais por Random Forest retreinado em janela móvel (<i>walk-forward</i>)</td></tr>
+  <tr><td>Integrantes</td><td>Luisa Caetano Araujo · RA 0076937<br>Raíssa Faria Ferreira · RA 0070311</td></tr>
   <tr><td>Disciplina</td><td>Modelagem e Projeto de Algoritmos para o Mercado Financeiro</td></tr>
-  <tr><td>Professor</td><td>Prof. Alexandre Pimenta</td></tr>
-  <tr><td>Data de entrega</td><td><span class="preencher">___/___/2026</span></td></tr>
-  <tr><td>Etapa</td><td>Proposta conceitual e metodológica, sem implementação de código</td></tr>
+  <tr><td>Professor</td><td>Dr. Alexandre Pimenta</td></tr>
+  <tr><td>Data de entrega</td><td>03/11/2026</td></tr>
+  <tr><td>Etapa</td><td>Proposta conceitual e metodológica. A implementação em MQL5 é a próxima etapa</td></tr>
+  <tr><td>Plataforma</td><td>MetaTrader 5: Expert Advisor em MQL5, Random Forest da biblioteca ALGLIB que acompanha o MT5, backtest no Testador de Estratégias</td></tr>
 </table>
 
 <!-- ============================================================ -->
 <h2><span class="n">4.2</span>Objetivo e justificativa</h2>
 
 <h3>Objetivo específico do robô</h3>
-<p>Operar day trade no <b>Mini Índice Futuro da B3</b> (série contínua <code>WIN$</code> no backtest), no tempo gráfico de <b>15 minutos</b>. Uma regra de seguimento de tendência baseada no <b>DMI/ADX</b> gera os <i>candidatos</i> a entrada. Um classificador <b>Random Forest</b> estima, para cada candidato, a probabilidade de a operação atingir o alvo antes do stop, e o robô só entra quando essa probabilidade passa de um limiar <i>p*</i>. O modelo é <b>retreinado todo mês</b> com os seis meses de pregões imediatamente anteriores.</p>
+<p>Operar day trade no <b>Mini Índice Futuro da B3</b> (série contínua <code>WIN$</code> no backtest), no tempo gráfico de <b>15 minutos</b>. Uma regra de seguimento de tendência baseada no <b>DMI/ADX</b> gera os <i>candidatos</i> a entrada. Um classificador <b>Random Forest</b> estima, para cada candidato, a probabilidade de a operação atingir o alvo antes do stop, e o robô só entra quando essa probabilidade passa de um limiar <i>p*</i>. O modelo é <b>retreinado a cada 20 pregões</b> (cerca de um mês) com os 120 pregões imediatamente anteriores.</p>
+<p>Todo o sistema é um único <b>Expert Advisor em MQL5</b>: a regra, as variáveis, a rotulagem, o treino do Random Forest, a escolha do limiar e a execução das ordens rodam dentro do MetaTrader 5. Não há etapa fora da plataforma. Assim, o mesmo arquivo que é testado no Testador de Estratégias é o que vai operar na conta.</p>
 
 <h3>Por que usar Aprendizado de Máquina</h3>
 <ul>
@@ -94,9 +106,9 @@
 <h3>Vantagem competitiva esperada</h3>
 <ul>
   <li><b>Menos operações ruins.</b> A regra base gera sinais em excesso de propósito. O filtro descarta os de baixa probabilidade, o que deve subir o fator de lucro e reduzir o rebaixamento, mesmo operando menos.</li>
-  <li><b>Base com vantagem medida.</b> A regra de entrada vem do robô <i>ADX Cata-vento</i> (Trabalho 01), que obteve fator de lucro de 1,36 em 533 operações no WINV26. O ML refina uma estratégia que já tem resultado, em vez de procurar uma do zero.</li>
-  <li><b>Validação honesta.</b> No Trabalho 01 não houve período fora da amostra, porque o contrato vence e o histórico some. A série contínua <code>WIN$</code> permite dezenas de meses fora da amostra.</li>
-  <li><b>Decisão explicável.</b> A importância das variáveis mostra o que o modelo está usando. Se ele passar a depender de algo sem sentido econômico, isso aparece.</li>
+  <li><b>Base conhecida, com vantagem a provar.</b> A regra de entrada vem do robô <i>ADX Cata-vento</i> (Trabalho 01), que fez fator de lucro de 1,36 em 533 operações no WINV26 (77 pregões, dentro da amostra e sem custos) e 1,11 em 1.742 operações no <code>WIN$</code> em 2026, também sem custos. Com o custo desta proposta (R$ 3 por operação), esses fatores seriam 1,13 e 0,92. Uma medição preliminar e simplificada da regra desta proposta, sem o filtro e em barras de 1 minuto, deu 1,09 sem custos e 1,03 com custos de 2023 a 2026. A margem é fina, e é por isso que o filtro precisa operar menos e melhor: essa é a hipótese a testar.</li>
+  <li><b>Validação honesta.</b> No Trabalho 01, o resultado principal foi medido no próprio WINV26, sem período fora da amostra planejado, porque o contrato vence e o histórico some. O teste posterior no <code>WIN$</code> em 2026 ajuda, mas não é totalmente inédito. A série contínua permite dezenas de meses realmente fora da amostra.</li>
+  <li><b>Decisão explicável.</b> A importância das variáveis dá uma indicação do que o modelo está usando. Se ele passar a depender de algo sem sentido econômico, isso aparece.</li>
 </ul>
 
 <h3>Oportunidade de mercado</h3>
@@ -116,7 +128,7 @@
   <tr><td>ATR (14)</td><td>Escala stop, alvo e trava no zero a zero</td><td>ATR relativo ao preço e seu percentil recente</td></tr>
   <tr><td>VWAP do dia</td><td>—</td><td>Distância do preço à VWAP, em ATRs</td></tr>
 </table>
-<p>DMI 12 e ADX ≥ 20 ficam fixos. No Trabalho 01, o fator de lucro ficou entre 1,24 e 1,42 com o período do DMI variando de 8 a 20, então esse valor não é crítico. O limiar 20 é mais permissivo que o clássico 25 de propósito: a regra gera mais candidatos e a floresta faz a seleção fina.</p>
+<p>DMI 12 e ADX ≥ 20 ficam fixos. No Trabalho 01 (WINV26, sem custos), o fator de lucro ficou entre 1,24 e 1,42 com o período do DMI variando de 8 a 20, então esse valor não é crítico. O limiar 20 é mais permissivo que o clássico 25 de propósito: a regra gera mais candidatos e a floresta faz a seleção fina.</p>
 
 <h3>Regras de entrada</h3>
 <p>Avaliadas apenas no fechamento de cada barra de 15 minutos, sobre barras já fechadas:</p>
@@ -132,17 +144,17 @@
   <tr><th>Saída</th><th>Regra</th><th>Justificativa</th></tr>
   <tr><td>Stop loss</td><td>1,5 × ATR a partir da entrada</td><td>Limita a perda a um múltiplo do ruído normal do mercado. Um stop fixo em pontos fica curto em dia volátil e largo em dia calmo.</td></tr>
   <tr><td>Take profit</td><td>3,0 × ATR a partir da entrada</td><td>Relação 2:1 entre alvo e stop, próxima da usada no Trabalho 01 (375 / 150 pontos). Com ela, basta acertar mais de 1/3 das operações para cobrir as perdas antes dos custos.</td></tr>
-  <tr><td>Trava no zero a zero</td><td>Stop vai ao preço de entrada após 1,5 × ATR a favor</td><td>Impede que uma operação que já andou a favor vire perda. No Trabalho 01 a trava melhorou o modo de entrada por estado (1,26 → 1,34).</td></tr>
+  <tr><td>Trava no zero a zero</td><td>Stop vai ao preço de entrada após 1,5 × ATR a favor</td><td>Impede que uma operação que já andou a favor vire perda. No Trabalho 01 a trava melhorou o modo de entrada por estado (1,26 → 1,34, no WINV26 e sem custos).</td></tr>
   <tr><td>Fim do pregão</td><td>Zera tudo às 17:30</td><td>É day trade: não carrega posição para o dia seguinte, o que elimina o risco de gap noturno e a margem de custódia.</td></tr>
 </table>
 <p>As mesmas regras de saída, inclusive a trava no zero a zero, definem o <b>rótulo</b> com que o modelo é treinado (seção 4.4). Assim o modelo aprende o mesmo evento que decide o resultado da operação real.</p>
 
 <h3>Gestão de risco e tamanho de posição</h3>
 <ul>
-  <li><b>Toda ordem sai com stop e alvo</b> registrados na corretora no momento da entrada.</li>
-  <li><b>Tamanho por risco, modulado pela confiança do modelo:</b> o risco por operação é <i>R</i> = 0,25% do capital se <i>p*</i> ≤ <i>P</i> &lt; 0,65, e <i>R</i> = 0,5% se <i>P</i> ≥ 0,65.
+  <li><b>Toda ordem sai com stop e alvo</b> registrados no servidor da corretora no momento da entrada.</li>
+  <li><b>Tamanho por risco, modulado pela confiança do modelo:</b> o risco por operação é <i>R</i> = 0,25% do capital se <i>p*</i> ≤ <i>P</i> &lt; 0,65, e <i>R</i> = 0,5% se <i>P</i> ≥ 0,65. Se o limiar escolhido no ciclo for <i>p*</i> ≥ 0,65, todas as entradas usam 0,5%. Ajustar o tamanho pela probabilidade estimada segue a ideia de <i>bet sizing</i> de López de Prado (2018, cap. 10).
     <div class="formula">contratos = max(1, min(5, ⌊ R × Capital / (1,5 × ATR × R$ 0,20) ⌋ ))</div>
-    Com capital de R$ 20.000, <i>R</i> = 0,5% e ATR de 140 pontos (stop de 210 pontos, R$ 42 por contrato): ⌊100 / 42⌋ = 2 contratos. Quando a volatilidade sobe o stop alarga e o número de contratos cai, então o risco em reais fica constante.</li>
+    Com capital de R$ 20.000, <i>R</i> = 0,5% e ATR de 380 pontos (mediana medida nos candidatos do <code>WIN$</code>, 2023–2026), o stop é de 570 pontos, R$ 114 por contrato: ⌊100 / 114⌋ = 0, e vale o mínimo de 1 contrato, com risco real de 0,57% do capital. Nesse capital, a fórmula dá 1 contrato em praticamente todos os casos, e o risco em reais sobe com a volatilidade. O ajuste pela confiança do modelo só passa a mudar o tamanho a partir de cerca de R$ 46 mil, quando o risco tende a ficar constante.</li>
   <li><b>Trava diária:</b> no máximo 4 operações por dia. O robô para no dia após perder 1,5% do capital ou após 3 stops seguidos.</li>
   <li><b>Uma posição por vez</b>, sem preço médio e sem aumentar posição perdedora.</li>
 </ul>
@@ -151,55 +163,70 @@
 <h2><span class="n">4.4</span>Sistema de aprendizado de máquina</h2>
 
 <h3>Técnica escolhida: Random Forest</h3>
-<p>O problema é de <b>classificação</b>: dado o contexto do mercado no momento de um sinal, a operação vai atingir o alvo antes do stop? O Random Forest (Breiman, 2001) é um conjunto de árvores de decisão, cada uma treinada numa amostra diferente dos dados e com um subconjunto aleatório das variáveis. A probabilidade final é a média das estimativas das árvores: cada folha guarda a proporção de exemplos do treino que bateram o alvo. Escolhemos a técnica por cinco motivos:</p>
+<p>O problema é de <b>classificação</b>: dado o contexto do mercado no momento de um sinal, a operação vai atingir o alvo antes do stop? O Random Forest (Breiman, 2001) é um conjunto de árvores de decisão, cada uma treinada numa amostra diferente dos dados e com um subconjunto aleatório das variáveis. A probabilidade final é a fração de árvores que votam em y = 1: na ALGLIB, cada árvore cresce até a folha ficar pura, e a folha guarda só a classe. Como o treino é balanceado, <i>P</i> serve para ordenar os sinais e não é a chance real de bater o alvo; a curva de calibração acompanha essa diferença.</p>
+<p>A arquitetura é a que López de Prado (2018, cap. 3) chama de <b>meta-rotulagem</b> (<i>meta-labeling</i>): um modelo primário, aqui a regra do DMI/ADX, decide o <i>lado</i> da operação, e um modelo secundário, o Random Forest, decide <i>se</i> entra e com que tamanho. O modelo de ML não precisa prever a direção do mercado, só se aquele sinal específico costuma dar certo naquele contexto, o que é um problema bem mais fácil.</p>
+<p>Escolhemos a técnica por cinco motivos:</p>
 <ul>
-  <li><b>Funciona com poucos dados.</b> Seis meses geram algumas centenas de sinais. O Random Forest lida bem com esse tamanho. Uma rede LSTM precisaria de muito mais exemplos e tenderia a decorar ruído.</li>
-  <li><b>Resiste ao sobreajuste.</b> A média de centenas de árvores diferentes reduz a variância de uma árvore isolada, e a profundidade limitada impede que cada árvore decore o treino.</li>
+  <li><b>Funciona com poucos dados.</b> Seis meses geram cerca de 1.700 candidatos, mas eles são muito parecidos entre si e só cerca de 12% batem o alvo, então a informação real é bem menor que esse número. O Random Forest lida bem com esse tamanho. Uma rede LSTM precisaria de muito mais exemplos e tenderia a decorar ruído.</li>
+  <li><b>Resiste ao sobreajuste.</b> A média de muitas árvores diferentes reduz a variância de uma árvore isolada (Breiman, 2001; Hastie, Tibshirani e Friedman, 2009, cap. 15).</li>
   <li><b>Capta interações não lineares</b> entre variáveis sem que precisemos especificá-las, e dispensa normalização.</li>
-  <li><b>Treina em segundos.</b> Retreinar a cada janela não tem custo relevante. Um backtest por indivíduo, como num Algoritmo Genético, custaria horas por ciclo.</li>
-  <li><b>É interpretável e fácil de implementar.</b> A importância das variáveis mostra o que pesa na decisão. A implementação usa o <code>RandomForestClassifier</code> do scikit-learn, e o modelo pode ser exportado em ONNX para rodar dentro do MetaTrader 5.</li>
+  <li><b>Já existe pronto dentro do MetaTrader 5.</b> A <b>ALGLIB</b>, biblioteca numérica distribuída com o MT5 em <code>MQL5\Include\Math\Alglib</code>, implementa o Random Forest na classe <code>CDForest</code>: treino (<code>DFBuilderBuildRandomForest</code>), previsão de probabilidade (<code>DFProcess</code>), importância das variáveis e gravação do modelo em arquivo (<code>DFSerialize</code>). Por isso o robô inteiro pode ser escrito em MQL5, sem Python e sem bibliotecas externas.</li>
+  <li><b>Treina em segundos.</b> Com alguns milhares de exemplos e 17 variáveis, cada floresta treinou em menos de 5 segundos em teste com a ALGLIB do MT5 (até 5.000 linhas), então retreinar a cada ciclo tem custo baixo. Um Algoritmo Genético precisaria de um backtest por indivíduo, o que custaria horas por ciclo.</li>
 </ul>
-<p>As alternativas foram descartadas por motivos específicos. <b>Redes neurais (LSTM)</b> exigem muitos dados, são lentas de treinar, sensíveis a hiperparâmetros e opacas. O <b>Algoritmo Genético</b> otimiza parâmetros fixos, mas não olha o contexto de cada operação. A <b>Lógica Fuzzy</b> depende de funções de pertinência definidas à mão.</p>
+<p>As alternativas foram descartadas por motivos específicos. <b>Redes neurais (LSTM)</b> exigem muitos dados, são lentas de treinar, sensíveis a hiperparâmetros e opacas, e em MQL5 teriam de ser escritas à mão ou treinadas fora da plataforma. O <b>Algoritmo Genético</b> otimiza parâmetros fixos, mas não olha o contexto de cada operação. A <b>Lógica Fuzzy</b> depende de funções de pertinência definidas à mão. Treinar fora (em Python) e carregar o modelo pronto no MT5 em formato ONNX também foi descartado: o modelo ficaria congelado, e o retreino a cada ciclo exigiria um processo fora da plataforma.</p>
 
 <h3>Variáveis de entrada (features)</h3>
-<p>Calculadas no fechamento da barra do sinal, só com informação disponível naquele instante. As variáveis de direção são multiplicadas pelo sentido da operação (+1 compra, −1 venda), para que "a favor" signifique o mesmo nos dois lados e um único modelo sirva para compra e venda.</p>
+<p>Calculadas no fechamento da barra do sinal, só com informação disponível naquele instante. As variáveis de direção são multiplicadas pelo sentido da operação (+1 compra, −1 venda), para que "a favor" signifique o mesmo nos dois lados e um único modelo sirva para compra e venda. São 17 variáveis no total.</p>
 <table class="t">
-  <tr><th>Grupo</th><th>Variável</th></tr>
-  <tr><td>Tendência</td><td>ADX; inclinação do ADX em 3 barras; (DI+ − DI−) × sentido</td></tr>
-  <tr><td>Volatilidade</td><td>ATR / preço; percentil do ATR nos últimos 20 pregões; amplitude do dia até agora em ATRs</td></tr>
-  <tr><td>Momento</td><td>Retorno das últimas 1, 4 e 16 barras × sentido, em ATRs</td></tr>
-  <tr><td>Posição no dia</td><td>Distância à VWAP × sentido, em ATRs; posição do preço na máxima e mínima do dia (0 a 1); gap de abertura × sentido, em ATRs</td></tr>
-  <tr><td>Fluxo</td><td>Volume da barra ÷ média do mesmo horário nos últimos 20 pregões</td></tr>
-  <tr><td>Calendário</td><td>Minutos desde a abertura; dia da semana</td></tr>
-  <tr><td>Sinal</td><td>Sentido (+1/−1); operações já feitas no dia</td></tr>
+  <tr><th>Grupo</th><th>Variável</th><th>Como sai no MQL5</th></tr>
+  <tr><td>Tendência</td><td>ADX; inclinação do ADX em 3 barras; (DI+ − DI−) × sentido</td><td>buffers do mesmo indicador ADX do Trabalho 01 (<code>CopyBuffer</code>)</td></tr>
+  <tr><td>Volatilidade</td><td>ATR / preço; percentil do ATR nos últimos 20 pregões; amplitude do dia até agora em ATRs</td><td><code>iATR</code> + barras M15 (<code>CopyRates</code>)</td></tr>
+  <tr><td>Momento</td><td>Retorno das últimas 1, 4 e 16 barras × sentido, em ATRs</td><td>barras M15</td></tr>
+  <tr><td>Posição no dia</td><td>Distância à VWAP × sentido, em ATRs; posição do preço na máxima e mínima do dia (0 a 1); gap de abertura × sentido, em ATRs</td><td>VWAP calculada no robô com o volume real (<code>real_volume</code>) das barras do dia</td></tr>
+  <tr><td>Fluxo</td><td>Volume da barra ÷ média do mesmo horário nos últimos 20 pregões</td><td>barras M15</td></tr>
+  <tr><td>Calendário</td><td>Minutos desde a abertura; dia da semana</td><td><code>TimeToStruct</code></td></tr>
+  <tr><td>Sinal</td><td>Sentido (+1/−1); candidatos já ocorridos no dia</td><td>contagem pela regra, sem depender do filtro</td></tr>
 </table>
 
 <h3>Rótulo (o que o modelo aprende)</h3>
-<p>Cada sinal da regra base no histórico é simulado com as mesmas saídas da seção 4.3 (stop, alvo, trava no zero a zero e encerramento às 17:30), numa adaptação do método das três barreiras (López de Prado, 2018):</p>
+<p>Cada sinal da regra base no histórico é simulado com as mesmas saídas da seção 4.3 (stop, alvo, trava no zero a zero e encerramento às 17:30), numa adaptação do método das três barreiras (López de Prado, 2018, cap. 3):</p>
 <div class="formula">
 y = 1 &nbsp;se a operação sai no alvo (3,0 × ATR)<br>
 y = 0 &nbsp;se sai no stop (1,5 × ATR), na trava no zero a zero ou no encerramento das 17:30
 </div>
+<p>No histórico, <b>toda barra que satisfaz a regra vira um exemplo</b>, mesmo quando a barra anterior também era candidata. É o que acontece na operação real: se o modelo recusa um sinal, a barra seguinte é avaliada de novo. Exemplos consecutivos do mesmo movimento são parecidos entre si, por isso a validação usa sempre um bloco de tempo posterior, nunca uma amostra aleatória. Já a simulação das operações (validação e execução) respeita uma posição por vez e o limite diário de 4 operações.</p>
+<p><b>Como o robô calcula o rótulo:</b> a simulação percorre as <b>barras de 1 minuto</b> do restante do pregão (<code>CopyRates</code> em <code>PERIOD_M1</code>), e não as de 15 minutos, para saber o que foi tocado primeiro. Se uma mesma barra de 1 minuto toca o stop e o alvo, conta como stop. É uma premissa conservadora: na dúvida, o modelo aprende o pior caso.</p>
 
 <h3>O que se pretende otimizar</h3>
 <ul>
   <li><b>A seleção das operações:</b> o modelo aprende a probabilidade <i>P</i>(y = 1 | contexto).</li>
-  <li><b>O limiar de entrada <i>p*</i></b>, entre 0,40 e 0,70 em passos de 0,025: define quantos sinais passam pelo filtro.</li>
-  <li><b>Os hiperparâmetros</b> do Random Forest: profundidade máxima {3, 5, 8}, mínimo de amostras por folha {5, 10, 20} e fração de variáveis por divisão {√p, 0,5}. O número de árvores fica fixo em 300 e as classes são balanceadas por peso.</li>
+  <li><b>O limiar de entrada <i>p*</i></b>, entre 0,40 e 0,70 em passos de 0,025 (13 valores): define quantos sinais passam pelo filtro.</li>
+  <li><b>Os hiperparâmetros do Random Forest</b>, nos termos que a ALGLIB oferece (tabela abaixo).</li>
 </ul>
-<p>As regras de DMI/ADX e as saídas em ATR ficam fixas. Isso mantém o rótulo estável e evita otimizar a regra e o filtro ao mesmo tempo, o que multiplicaria o risco de sobreajuste.</p>
+<table class="t longa">
+  <tr><th>Hiperparâmetro e função na ALGLIB</th><th>Valores</th><th>Justificativa</th></tr>
+  <tr><td>Fração do treino sorteada por árvore<br><code>DFBuilderSetSubsampleRatio</code></td><td class="num">0,20 · 0,35 · 0,50</td><td>É o principal controle de sobreajuste da ALGLIB, que não limita a profundidade das árvores. A documentação da biblioteca indica reduzir a fração para reduzir o sobreajuste. López de Prado (2018, cap. 6) recomenda o mesmo quando os exemplos se sobrepõem no tempo, como os nossos.</td></tr>
+  <tr><td>Variáveis sorteadas por divisão<br><code>DFBuilderSetRndVars</code></td><td class="num">4 (≈ √17) · 8</td><td>√p é o padrão para classificação (Hastie, Tibshirani e Friedman, 2009) e o padrão da própria ALGLIB. Junto com a fração da amostra, é o hiperparâmetro que mais muda o resultado (Probst, Wright e Boulesteix, 2019).</td></tr>
+  <tr><td>Número de árvores<br><code>DFBuilderBuildRandomForest</code></td><td class="num">100, fixo</td><td>Não precisa ser otimizado: em Brier e log loss, mais árvores não pioram; em taxa de erro e AUC pode haver pequenas oscilações, mas ajustar o número de árvores não é recomendado (Probst e Boulesteix, 2018). Acima de 64 a 128 árvores o ganho é desprezível (Oshiro, Perez e Baranauskas, 2012).</td></tr>
+  <tr><td>Semente aleatória<br><code>DFBuilderSetSeed</code></td><td class="num">fixa</td><td>O mesmo backtest dá sempre o mesmo resultado, o que permite conferir e comparar.</td></tr>
+</table>
+<ul>
+  <li><b>Desbalanceamento de classes:</b> uma medição preliminar no <code>WIN$</code> dá cerca de 12% de exemplos y = 1. A ALGLIB não aceita peso por classe, então o robô <b>replica as linhas da classe minoritária</b> (cerca de 7 vezes) só na matriz de treino, até as classes terem peso próximo, o que se aproxima do peso por classe no critério de Gini. A validação usa os dados sem réplicas.</li>
+</ul>
+<p>São 6 configurações × 13 limiares = <b>78 combinações por ciclo</b>, uma grade pequena de propósito. Quanto mais combinações se testam no mesmo trecho de dados, maior a chance de a melhor ser só sorte (Bailey <i>et al.</i>, 2014).</p>
+<p>Assim, o aprendizado de máquina otimiza a cada ciclo os parâmetros que decidem <i>se</i> a estratégia entra (o limiar <i>p*</i> e a configuração do modelo), atendendo ao requisito de usar ML para otimizar parâmetros. As regras de DMI/ADX e as saídas em ATR ficam fixas. Isso mantém o rótulo estável e evita otimizar a regra e o filtro ao mesmo tempo, o que multiplicaria o risco de sobreajuste.</p>
 
 <h3>Função objetivo</h3>
-<p>São dois níveis. As <b>árvores</b> são construídas minimizando a impureza de Gini, o critério padrão de classificação. A <b>escolha de hiperparâmetros e limiar</b> não usa acurácia, porque acurácia alta não garante dinheiro. Ela usa o resultado financeiro das operações filtradas no trecho de validação, já com custos:</p>
+<p>São dois níveis. As <b>árvores</b> são construídas minimizando a impureza de Gini, o critério padrão de classificação e o que a ALGLIB usa. A <b>escolha de hiperparâmetros e limiar</b> não usa acurácia, porque acurácia alta não garante dinheiro. Ela usa o resultado financeiro das operações filtradas no trecho de validação, já com custos:</p>
 <div class="formula">
 F(θ, p*) = LucroLíquido / RebaixamentoMáximo &nbsp;&nbsp;(fator de recuperação)<br>
 <span style="color:var(--dim)">sujeito a: N ≥ 20 operações e fator de lucro ≥ 1,05; se violar, F = −1</span>
 </div>
 <ul>
-  <li><b>Fator de recuperação:</b> premia ganhar muito arriscando pouco. Maximizar só o lucro escolheria filtros que ganham com rebaixamentos insuportáveis.</li>
+  <li><b>Fator de recuperação:</b> premia ganhar muito arriscando pouco. Maximizar só o lucro escolheria filtros que ganham com rebaixamentos insuportáveis. É a mesma métrica que o relatório do Testador de Estratégias do MT5 mostra, o que facilita conferir.</li>
   <li><b>N ≥ 20:</b> impede que o limiar suba tanto que sobrem três operações de sorte.</li>
   <li><b>Custos:</b> R$ 0,50 por contrato por lado de emolumentos e corretagem, mais 1 tick (5 pontos) de derrapagem por lado. É uma premissa conservadora.</li>
-  <li><b>Métricas de acompanhamento</b>, que não decidem nada: AUC, precisão e a curva de calibração das probabilidades.</li>
+  <li><b>Métricas de acompanhamento</b>, que não decidem nada: AUC, precisão e a curva de calibração das probabilidades, medidas na validação. O erro fora da bolsa (<i>out-of-bag</i>) da ALGLIB não é usado como evidência: as réplicas podem cair dos dois lados do sorteio e deixá-lo otimista. Em teste com dados aleatórios e fração 0,35, ele mostrou 7,5% de erro, quando o erro real era 50%. Pelo mesmo motivo, a importância das variáveis é só indicativa.</li>
 </ul>
 
 <h3>Arquitetura temporal: janela móvel (walk-forward)</h3>
@@ -233,46 +260,69 @@ F(θ, p*) = LucroLíquido / RebaixamentoMáximo &nbsp;&nbsp;(fator de recuperaç
 <figcaption>Janela de treinamento de 120 pregões: os 90 primeiros ajustam o modelo e os 30 últimos escolhem hiperparâmetros e limiar. Depois o modelo é retreinado nos 120 pregões completos e opera nos 20 seguintes. Tudo avança 20 pregões e o ciclo se repete.</figcaption>
 </figure>
 <ul>
-  <li><b>Janela de treinamento:</b> 120 pregões contínuos (cerca de 6 meses e algumas centenas de sinais). Os 90 primeiros treinam candidatos, e os 30 últimos, sempre posteriores, escolhem hiperparâmetros e <i>p*</i> pela função objetivo. O modelo final é retreinado nos 120 pregões com a configuração vencedora.</li>
+  <li><b>Janela de treinamento:</b> 120 pregões contínuos (cerca de 6 meses e 1.700 candidatos). Os 90 primeiros treinam candidatos, e os 30 últimos, sempre posteriores, escolhem hiperparâmetros e <i>p*</i> pela função objetivo. O modelo final é retreinado nos 120 pregões com a configuração vencedora.</li>
   <li><b>Janela de execução:</b> os 20 pregões seguintes (cerca de 1 mês). O robô opera com o modelo congelado.</li>
-  <li><b>Deslocamento:</b> ao fim de cada execução, as janelas avançam 20 pregões e o modelo é retreinado. Na operação real isso acontece no fim de semana.</li>
-  <li><b>Período de estudo:</b> <code>WIN$</code> M15 de janeiro de 2023 a outubro de 2026, cerca de 940 pregões e <b>~40 ciclos</b> fora da amostra.</li>
+  <li><b>Deslocamento:</b> ao fim de cada execução, as janelas avançam 20 pregões e o modelo é retreinado. O próprio robô faz isso, no primeiro tick do pregão, antes das 09:15 (seção 4.5).</li>
+  <li><b>Período de estudo:</b> <code>WIN$</code> M15 de janeiro de 2023 a outubro de 2026, cerca de 960 pregões e <b>~40 ciclos</b> fora da amostra.</li>
 </ul>
+
+<h3>Por que esses tamanhos de janela</h3>
+<table class="t longa">
+  <tr><th>Escolha</th><th>Justificativa</th></tr>
+  <tr><td>Treino de <b>120 pregões</b></td><td>É um meio-termo entre dois erros. Janela curta acompanha a mudança de regime, mas tem poucos exemplos e o modelo varia muito de um ciclo para o outro; janela longa é estável, mas mistura regimes que já não valem. Esse dilema é o problema central do aprendizado com <i>concept drift</i>, e janelas deslizantes de tamanho fixo são a solução clássica (Gama <i>et al.</i>, 2014). Seis meses dão cerca de 1.700 candidatos (medição preliminar; o menor valor de 2023 a 2026 foi 1.661). <b>Regra prévia:</b> se a contagem no histórico mostrar menos de 200 candidatos por janela, o treino passa para 180 pregões, decidido antes de ver qualquer resultado fora da amostra.</td></tr>
+  <tr><td>Validação de <b>30 pregões</b>, sempre depois do treino</td><td>Em série temporal, a validação tem de vir depois do treino: embaralhar os dados deixaria o modelo "ver o futuro" (Tashman, 2000; López de Prado, 2018, cap. 7). Trinta pregões é o tamanho que, com o filtro ligado, ainda deve render as 20 operações que a função objetivo exige: sem o filtro, a medição preliminar dá de 70 a 97 operações em 30 pregões.</td></tr>
+  <tr><td>Execução de <b>20 pregões</b>, avançando 20</td><td>É a análise walk-forward de Pardo (2008): otimiza num trecho, opera no trecho seguinte, que o modelo nunca viu, e repete. Como o deslocamento é igual à execução, as janelas de execução não se sobrepõem e, emendadas, formam uma única curva fora da amostra. Um mês por ciclo mantém o modelo atualizado e ainda dá cerca de 40 ciclos para avaliar.</td></tr>
+  <tr><td>Fronteira das janelas no <b>fim do pregão</b></td><td>Todo rótulo se resolve até as 17:30 do mesmo dia, então nenhum exemplo do treino usa preços da validação ou da execução. É a condição de "purga" de López de Prado (2018, cap. 7), satisfeita aqui sem precisar descartar exemplos.</td></tr>
+  <tr><td><b>Robustez</b>, não escolha</td><td>O backtest também será rodado com treino de 60 e de 250 pregões. Esses resultados serão <b>relatados, e não usados para escolher</b> a janela, porque escolher a melhor depois de ver o resultado seria sobreajuste à janela (Bailey <i>et al.</i>, 2014).</td></tr>
+</table>
 
 <h3>Restrições do problema</h3>
 <ul>
   <li><b>Operacionais:</b> apenas day trade, com tudo zerado às 17:30. Uma posição por vez. Toda ordem com stop e alvo. Máximo de 4 operações por dia.</li>
-  <li><b>Sem olhar o futuro:</b> as variáveis usam só barras fechadas. Validação sempre posterior ao treino, sem embaralhar a ordem temporal. A janela de execução nunca influencia o modelo.</li>
+  <li><b>Sem olhar o futuro:</b> as variáveis usam só barras fechadas. Validação sempre posterior ao treino, sem embaralhar a ordem temporal. A janela de execução nunca influencia o modelo. No Testador de Estratégias essa garantia é reforçada pela própria plataforma: o robô só enxerga os dados até o instante simulado.</li>
   <li><b>Sem vazamento de rótulo:</b> toda operação simulada fecha até as 17:30 do mesmo pregão, então o rótulo de um sinal nunca usa dados de outro dia. Nenhum rótulo do treino depende de preços da validação ou da execução.</li>
-  <li><b>Estatísticas:</b> desbalanceamento de classes tratado por peso. Mínimo de 20 operações na validação para aceitar uma configuração.</li>
+  <li><b>Estatísticas:</b> desbalanceamento de classes tratado pela replicação da classe minoritária. Mínimo de 20 operações na validação para aceitar uma configuração.</li>
   <li><b>Da série contínua:</b> o <code>WIN$</code> emenda contratos com vencimentos diferentes. Por ser day trade, nenhuma posição atravessa a rolagem, e as variáveis que dependem de vários dias são recalculadas a partir do novo contrato.</li>
 </ul>
 
 <!-- ============================================================ -->
-<h2><span class="n">5</span>Avaliação e próximos passos</h2>
+<h2><span class="n">4.5</span>Implementação no MetaTrader 5</h2>
+
+<div class="destaque">O robô é um <b>Expert Advisor (EA) em MQL5</b>. Tudo o que foi descrito acima, inclusive o treino do Random Forest e o laço walk-forward, roda dentro dele. O mesmo arquivo <code>.ex5</code> é usado no Testador de Estratégias e, depois, num gráfico de uma conta da B3, sem nenhuma etapa fora do MetaTrader 5.</div>
+
+<ul>
+  <li><b>Treino:</b> usa o Random Forest da ALGLIB, que acompanha o MT5, sem Python nem biblioteca externa. Em teste, cada floresta treinou em menos de 5 segundos, com até 5.000 linhas.</li>
+  <li><b>Backtest:</b> um único teste no Testador de Estratégias, com <code>WIN$</code> M15 de janeiro de 2023 a outubro de 2026, já é o walk-forward completo. Os primeiros 120 pregões são só aquecimento.</li>
+  <li><b>Conta:</b> os indicadores vêm do <code>WIN$</code>, e as ordens vão para o contrato vigente. Antes do dinheiro real, são pelo menos 20 pregões em conta demonstração.</li>
+  <li><b>Conferência:</b> com o filtro desligado e os parâmetros do Trabalho 01, o robô tem de reproduzir as operações no WINV26. Com a semente fixa, dois testes têm de dar o mesmo relatório.</li>
+</ul>
+<p>O código e o plano de testes detalhados são a próxima etapa do trabalho.</p>
+
+<!-- ============================================================ -->
+<h2><span class="n">5</span>Avaliação</h2>
 <h3>Como o resultado será medido</h3>
 <p>Só a curva <b>fora da amostra</b> (a concatenação das janelas de execução) conta como resultado. Ela será comparada com duas referências no mesmo período e com os mesmos custos:</p>
 <ol>
-  <li><b>Regra sem filtro:</b> todos os sinais da regra base são operados. Essa comparação isola o valor do Random Forest.</li>
+  <li><b>Regra sem filtro:</b> o mesmo robô com o filtro desligado por um parâmetro de entrada, operando todos os sinais da regra base. Essa comparação isola o valor do Random Forest.</li>
   <li><b>Cata-vento original:</b> o robô do Trabalho 01 com seus parâmetros fixos.</li>
 </ol>
-<p>Métricas: lucro líquido, fator de lucro, rebaixamento máximo, fator de recuperação, taxa de acerto, número de operações e AUC fora da amostra. A hipótese se confirma se o filtro superar a regra sem filtro em fator de recuperação na maioria dos ciclos. Se não superar, isso também é um resultado e será relatado como tal.</p>
-
-<h3>Plano de implementação (próxima etapa)</h3>
-<ol>
-  <li>Exportar as barras M15 do <code>WIN$</code> do MetaTrader 5 para CSV.</li>
-  <li>Em Python (pandas e scikit-learn): gerar os sinais da regra, calcular as variáveis e os rótulos, e rodar o laço walk-forward com treino, validação e execução.</li>
-  <li>Simular as operações filtradas com custos e gerar o relatório: curva fora da amostra, comparação com as referências e importância das variáveis ao longo dos ciclos.</li>
-  <li>Opcional: exportar o modelo em ONNX e carregá-lo num robô MQL5 para demonstrar a execução no Testador do MetaTrader 5.</li>
-</ol>
+<p>Métricas: lucro líquido, fator de lucro, rebaixamento máximo, fator de recuperação, taxa de acerto, número de operações e AUC fora da amostra. A hipótese se confirma se o filtro superar a regra sem filtro em fator de recuperação na curva fora da amostra completa e na maioria dos ciclos; ciclo em que o filtro não opera conta como não superado. Se não superar, isso também é um resultado e será relatado como tal.</p>
 
 <h2><span class="n">6</span>Referências</h2>
 <ul class="refs">
+  <li>BAILEY, David H.; BORWEIN, Jonathan M.; LÓPEZ DE PRADO, Marcos; ZHU, Qiji Jim. Pseudo-mathematics and financial charlatanism: the effects of backtest overfitting on out-of-sample performance. <i>Notices of the American Mathematical Society</i>, v. 61, n. 5, p. 458–471, 2014.</li>
+  <li>BOCHKANOV, Sergey. <i>ALGLIB: decision forest (random forest)</i>. Manual de referência. Disponível em: alglib.net. Versão em MQL5 distribuída com o MetaTrader 5 em <code>MQL5\Include\Math\Alglib</code>.</li>
   <li>BREIMAN, Leo. Random Forests. <i>Machine Learning</i>, v. 45, n. 1, p. 5–32, 2001.</li>
-  <li>LÓPEZ DE PRADO, Marcos. <i>Advances in Financial Machine Learning</i>. Hoboken: Wiley, 2018.</li>
-  <li>WILDER, J. Welles. <i>New Concepts in Technical Trading Systems</i>. Greensboro: Trend Research, 1978.</li>
+  <li>GAMA, João; ŽLIOBAITĖ, Indrė; BIFET, Albert; PECHENIZKIY, Mykola; BOUCHACHIA, Abdelhamid. A survey on concept drift adaptation. <i>ACM Computing Surveys</i>, v. 46, n. 4, art. 44, 2014.</li>
+  <li>HASTIE, Trevor; TIBSHIRANI, Robert; FRIEDMAN, Jerome. <i>The Elements of Statistical Learning</i>. 2. ed. New York: Springer, 2009. Cap. 15: Random Forests.</li>
+  <li>LÓPEZ DE PRADO, Marcos. <i>Advances in Financial Machine Learning</i>. Hoboken: Wiley, 2018. Caps. 3 (rotulagem e meta-rotulagem), 6 (métodos de conjunto), 7 (validação cruzada com purga) e 10 (tamanho da aposta).</li>
+  <li>METAQUOTES. <i>MQL5 Reference</i>: Biblioteca Padrão (ALGLIB, CTrade) e Testador de Estratégias. Disponível em: mql5.com/pt/docs.</li>
+  <li>OSHIRO, Thais M.; PEREZ, Pedro S.; BARANAUSKAS, José A. How many trees in a random forest? In: <i>Machine Learning and Data Mining in Pattern Recognition (MLDM 2012)</i>. Berlin: Springer, 2012. LNCS 7376, p. 154–168.</li>
   <li>PARDO, Robert. <i>The Evaluation and Optimization of Trading Strategies</i>. 2. ed. Hoboken: Wiley, 2008.</li>
-  <li>PEDREGOSA, F. et al. Scikit-learn: Machine Learning in Python. <i>Journal of Machine Learning Research</i>, v. 12, p. 2825–2830, 2011.</li>
+  <li>PROBST, Philipp; BOULESTEIX, Anne-Laure. To tune or not to tune the number of trees in random forest. <i>Journal of Machine Learning Research</i>, v. 18, n. 181, p. 1–18, 2018.</li>
+  <li>PROBST, Philipp; WRIGHT, Marvin N.; BOULESTEIX, Anne-Laure. Hyperparameters and tuning strategies for random forest. <i>WIREs Data Mining and Knowledge Discovery</i>, v. 9, n. 3, e1301, 2019.</li>
+  <li>TASHMAN, Leonard J. Out-of-sample tests of forecasting accuracy: an analysis and review. <i>International Journal of Forecasting</i>, v. 16, n. 4, p. 437–450, 2000.</li>
+  <li>WILDER, J. Welles. <i>New Concepts in Technical Trading Systems</i>. Greensboro: Trend Research, 1978.</li>
   <li>B3. Contrato Futuro Mini de Ibovespa: especificações. Disponível em: b3.com.br.</li>
 </ul>
 </html>

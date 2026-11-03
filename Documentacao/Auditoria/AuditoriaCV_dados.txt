@@ -1,0 +1,35 @@
+TimeCurrent 2026.10.30 20:00 conectado=1 maxbars=2000000
+barras M15=41326 (2022.06.01 09:00 a 2026.10.30 18:30) M1=613766 (2022.06.01 09:00 a 2026.10.30 18:31)
+buffers 41326 41326 41326 41326, calculados 46664 46664
+ano 2022: M15 barras=5368 pregoes=147 | M1 barras=79751 pregoes=147
+ano 2023: M15 barras=9082 pregoes=248 | M1 barras=134962 pregoes=248
+ano 2024: M15 barras=9522 pregoes=251 | M1 barras=141555 pregoes=251
+ano 2025: M15 barras=9479 pregoes=250 | M1 barras=140733 pregoes=250
+ano 2026: M15 barras=7875 pregoes=208 | M1 barras=116765 pregoes=208
+pregoes desde 2023=957
+candidatos totais=13893 por pregao=14.52
+candidatos por janela de 30 pregoes: min=376 p10=410 mediana=437 max=476
+candidatos por janela de 90 pregoes: min=1226 p10=1267 mediana=1311 max=1376
+candidatos por janela de 120 pregoes: min=1661 p10=1697 mediana=1744 max=1830
+rotulo 2023: n=3551 y=1 12.8% | stop 34.3% zero 11.4% 17:30 41.6% (17:30 com lucro 28.6%)
+rotulo 2024: n=3629 y=1 11.8% | stop 32.7% zero 10.4% 17:30 45.1% (17:30 com lucro 28.9%)
+rotulo 2025: n=3601 y=1 11.8% | stop 33.3% zero 10.2% 17:30 44.7% (17:30 com lucro 26.1%)
+rotulo 2026: n=3112 y=1 11.3% | stop 32.7% zero 10.0% 17:30 46.0% (17:30 com lucro 27.2%)
+rotulo TOTAL: n=13893 y=1 11.9% | stop 33.3% zero 10.5% 17:30 44.3% (17:30 com lucro 27.7%)
+ATR 2023: p10=282 p50=418 p90=611 | R=0,25%: 1c=100% 2c=0% 3+=0% acima do risco=100% | R=0,50%: 1c=100% 2c=0% 3+=0% acima=76%
+ATR 2024: p10=221 p50=320 p90=459 | R=0,25%: 1c=100% 2c=0% 3+=0% acima do risco=99% | R=0,50%: 1c=99% 2c=1% 3+=0% acima=45%
+ATR 2025: p10=224 p50=345 p90=508 | R=0,25%: 1c=100% 2c=0% 3+=0% acima do risco=99% | R=0,50%: 1c=99% 2c=1% 3+=0% acima=54%
+ATR 2026: p10=312 p50=521 p90=808 | R=0,25%: 1c=100% 2c=0% 3+=0% acima do risco=100% | R=0,50%: 1c=100% 2c=0% 3+=0% acima=86%
+ATR TOTAL: p10=244 p50=380 p90=628 | R=0,25%: 1c=100% 2c=0% 3+=0% acima do risco=100% | R=0,50%: 1c=100% 2c=0% 3+=0% acima=65%
+sem filtro 2023 custo R$0: n=726 FL=1.201 liquido=7705
+sem filtro 2023 custo R$3: n=726 FL=1.139 liquido=5527
+sem filtro 2024 custo R$0: n=696 FL=1.098 liquido=2888
+sem filtro 2024 custo R$3: n=696 FL=1.026 liquido=800
+sem filtro 2025 custo R$0: n=711 FL=1.024 liquido=786
+sem filtro 2025 custo R$3: n=711 FL=0.961 liquido=-1347
+sem filtro 2026 custo R$0: n=603 FL=1.039 liquido=1725
+sem filtro 2026 custo R$3: n=603 FL=0.998 liquido=-84
+sem filtro TOTAL custo R$0: n=2736 FL=1.090 liquido=13104
+sem filtro TOTAL custo R$3: n=2736 FL=1.032 liquido=4896
+validacao sem filtro: ciclos=42 operacoes em 30 pregoes min=70 mediana=87 max=97 | ciclos com N<20=0 | ciclos reprovados (N<20 ou FL<1,05 com custos)=21
+=== FIM

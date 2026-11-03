@@ -1,0 +1,15 @@
+=== build 6230
+T1 folha arvores=1: P exatamente 0/1=5000 intermediario=0 P*arvores nao inteiro=0
+T1 folha arvores=100: P exatamente 0/1=0 intermediario=5000 P*arvores nao inteiro=0
+T1b uma arvore, x identicos, 30% rotulo 1, P observados: P=0:29 P=1:11 outro:0 (proporcao daria 0,30)
+T2 ruido f=0.20 | OOB: sem balancear=0.259 REPLICADO=0.146 subamostrado(controle)=0.500 | erro real em teste balanceado: 0.500 0.496 0.498
+T2 ruido f=0.35 | OOB: sem balancear=0.258 REPLICADO=0.075 subamostrado(controle)=0.502 | erro real em teste balanceado: 0.500 0.497 0.502
+T2 ruido f=0.50 | OOB: sem balancear=0.267 REPLICADO=0.049 subamostrado(controle)=0.501 | erro real em teste balanceado: 0.501 0.499 0.497
+T3 tempo n=500: treino f=.35/4vars=84 ms; f=.50/8vars=236 ms; 1000 previsoes=22 ms
+T3 tempo n=2000: treino f=.35/4vars=534 ms; f=.50/8vars=1517 ms; 1000 previsoes=28 ms
+T3 tempo n=5000: treino f=.35/4vars=1682 ms; f=.50/8vars=4749 ms; 1000 previsoes=33 ms
+T3 tempo n=10000: treino f=.35/4vars=4050 ms; f=.50/8vars=11778 ms; 1000 previsoes=34 ms
+T4 semente: mesma semente dif max=0.0000000000; semente diferente dif max=0.2700
+T5 serializacao: tamanho=1022629 dif max apos recarregar=0.0000000000
+T6 codigo da proposta: ok, y[1]=0.140, soma y=1.000
+=== FIM
